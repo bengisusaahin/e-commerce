@@ -7,16 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bengisusahin.e_commerce.R
+import com.bengisusahin.e_commerce.data.User
 import com.bengisusahin.e_commerce.databinding.FragmentSignUpBinding
+import com.bengisusahin.e_commerce.util.Resource
+import com.bengisusahin.e_commerce.viewmodel.SignUpViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import dagger.hilt.android.AndroidEntryPoint
 
-
+// AndroidEntryPoint annotation is used for injecting dependencies to the fragment
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
-    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val viewModel by viewModels<SignUpViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,33 +41,34 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnSignUp.setOnClickListener {
-            val name = binding.etName.text.toString()
-            val email = binding.etEmailSignUp.text.toString()
-            val password = binding.etPasswordSignUp.text.toString()
-
-            if (email.isEmpty() || password.isEmpty()){
-                Toast.makeText(context,"Please fill in all fields",Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }else{
-                auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("signup", "createUserWithEmail:success")
-                            findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
-
-                            // navigate to home fragment
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("signUpFail", "signInWithEmail:failure", task.exception)
-                            Toast.makeText(context,"Authentication failed.",Toast.LENGTH_SHORT).show()
-                            // navigate to sign up fragment
-                        }
-                    }
+        binding.apply {
+            btnSignUp.setOnClickListener {
+                val user = User(
+                    etName.text.toString(),
+                    etEmailSignUp.text.toString()
+                )
+                val password = etPasswordSignUp.text.toString()
+                viewModel.createUserWithEmailAndPassword(user, password)
             }
-            binding.textviewLogin.setOnClickListener {
-                findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.signUpState.collect { state ->
+                when (state) {
+                    is Resource.Loading -> {
+                        Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
+                    }
+
+                    is Resource.Success -> {
+                        Log.d("SignUpFragment", "User signed up successfully ${state.data.toString()}")
+                        findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
+                    }
+
+                    is Resource.Error -> {
+                        Log.d("SignUpFragment", "Error: ${state.message}")
+                        Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }

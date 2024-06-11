@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
-// ViewModel for handling login and sign up operations
+// ViewModel for handling sign up operations
 @HiltViewModel
-class LoginSignUpViewModel @Inject constructor(
+class SignUpViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
 
