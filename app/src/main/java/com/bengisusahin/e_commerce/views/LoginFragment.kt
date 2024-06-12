@@ -6,15 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.databinding.FragmentLoginBinding
+import com.bengisusahin.e_commerce.util.Resource
+import com.bengisusahin.e_commerce.viewmodel.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val viewModel by viewModels<LoginViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -31,35 +38,37 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (auth.currentUser != null) {
-            // navigate to home fragment
-            Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
-        }
+        binding.apply {
+            btnLogin.setOnClickListener {
+                val email = etEmail.text.toString().trim()
+                val password = etPassword.text.toString()
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT)
+                        .show()
+                    return@setOnClickListener
+                }
+                viewModel.loginWithEmailAndPassword(email, password)
+            }
 
-        binding.btnLogin.setOnClickListener {
-            val email = binding.etEmail.text.toString()
-            val password = binding.etPassword.text.toString()
-
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }else{
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                            // navigate to home fragment
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(requireContext(), "Authentication failed.", Toast.LENGTH_SHORT).show()
-                        }
-                    }
+            textviewSignUp.setOnClickListener {
+                findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
             }
         }
 
-        binding.textviewSignUp.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+        lifecycleScope.launch {
+            viewModel.loginState.collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
+                    }
+                    is Resource.Success -> {
+                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                    }
+                    is Resource.Error -> {
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
         }
     }
 }

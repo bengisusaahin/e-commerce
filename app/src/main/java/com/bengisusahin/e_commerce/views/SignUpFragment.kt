@@ -14,10 +14,14 @@ import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.data.User
 import com.bengisusahin.e_commerce.databinding.FragmentSignUpBinding
 import com.bengisusahin.e_commerce.util.Resource
+import com.bengisusahin.e_commerce.util.SignUpValidation
 import com.bengisusahin.e_commerce.viewmodel.SignUpViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 // AndroidEntryPoint annotation is used for injecting dependencies to the fragment
 @AndroidEntryPoint
@@ -50,9 +54,13 @@ class SignUpFragment : Fragment() {
                 val password = etPasswordSignUp.text.toString()
                 viewModel.createUserWithEmailAndPassword(user, password)
             }
+
+            textviewLogin.setOnClickListener {
+                findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
+            }
         }
 
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launch {
             viewModel.signUpState.collect { state ->
                 when (state) {
                     is Resource.Loading -> {
@@ -67,6 +75,27 @@ class SignUpFragment : Fragment() {
                     is Resource.Error -> {
                         Log.d("SignUpFragment", "Error: ${state.message}")
                         Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.signUpFormState.collect { state ->
+                if (state.emailError is SignUpValidation.Error) {
+                    withContext(Dispatchers.Main) {
+                        binding.etEmailSignUp.apply {
+                            error = state.emailError.message
+                            requestFocus()
+                        }
+                    }
+                }
+                if (state.passwordError is SignUpValidation.Error) {
+                    withContext(Dispatchers.Main) {
+                        binding.etPasswordSignUp.apply {
+                            error = state.passwordError.message
+                            requestFocus()
+                        }
                     }
                 }
             }
