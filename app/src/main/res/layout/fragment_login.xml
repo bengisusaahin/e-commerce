@@ -74,6 +74,14 @@
         app:layout_constraintStart_toStartOf="@+id/container_password"
         app:layout_constraintTop_toBottomOf="@+id/container_password" />
 
+    <TextView
+        android:id="@+id/tv_forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forgot_password"
+        app:layout_constraintEnd_toEndOf="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
     <LinearLayout
         android:id="@+id/lin1"
         android:layout_width="match_parent"
@@ -106,13 +114,13 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
         android:text="or Continue With"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/btnLogin"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/btnLogin"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_forgotPassword" />
 
     <ImageButton
         android:id="@+id/imageBtn_google"

@@ -28,6 +28,9 @@ class LoginViewModel @Inject constructor(
     private val _loginFormState = Channel<FormState>()
     val loginFormState = _loginFormState.receiveAsFlow()
 
+    private val _resetPasswordState = MutableSharedFlow<Resource<String>>()
+    val resetPasswordState = _resetPasswordState.asSharedFlow()
+
     fun loginWithEmailAndPassword(email: String, password: String){
         val emailValidation = validateEmail(email)
         val passwordValidation = validatePassword(password)
@@ -54,4 +57,21 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
-}
+
+    fun resetPassword(email: String) {
+        viewModelScope.launch {
+            _resetPasswordState.emit(Resource.Loading())
+        }
+        firebaseAuth
+            .sendPasswordResetEmail(email)
+            .addOnSuccessListener {
+                viewModelScope.launch {
+                    _resetPasswordState.emit(Resource.Success(email))
+                }
+            }.addOnFailureListener {
+                viewModelScope.launch {
+                    _resetPasswordState.emit(Resource.Error(it.message.toString()))
+                }
+            }
+        }
+    }

@@ -12,9 +12,11 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.databinding.FragmentLoginBinding
+import com.bengisusahin.e_commerce.dialog.setUpBottomSheetDialog
 import com.bengisusahin.e_commerce.util.FieldValidation
 import com.bengisusahin.e_commerce.util.Resource
 import com.bengisusahin.e_commerce.viewmodel.LoginViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -48,6 +50,27 @@ class LoginFragment : Fragment() {
 
             textviewSignUp.setOnClickListener {
                 findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+            }
+
+            tvForgotPassword.setOnClickListener {
+                setUpBottomSheetDialog { email ->
+                    viewModel.resetPassword(email)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.resetPasswordState.collect{
+                when(it){
+                    is Resource.Loading -> {
+                    }
+                    is Resource.Success -> {
+                        Snackbar.make(binding.root, "Reset password link sent to your email", Snackbar.LENGTH_LONG).show()
+                    }
+                    is Resource.Error -> {
+                        Snackbar.make(requireView(), "Error: ${it.message}", Snackbar.LENGTH_LONG).show()
+                    }
+                }
             }
         }
 
