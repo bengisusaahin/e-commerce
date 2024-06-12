@@ -3,8 +3,8 @@ package com.bengisusahin.e_commerce.viewmodel
 import androidx.lifecycle.ViewModel
 import com.bengisusahin.e_commerce.data.User
 import com.bengisusahin.e_commerce.util.Resource
-import com.bengisusahin.e_commerce.util.SignUpFormState
-import com.bengisusahin.e_commerce.util.SignUpValidation
+import com.bengisusahin.e_commerce.util.FormState
+import com.bengisusahin.e_commerce.util.FieldValidation
 import com.bengisusahin.e_commerce.util.validateEmail
 import com.bengisusahin.e_commerce.util.validatePassword
 import com.google.firebase.auth.FirebaseAuth
@@ -26,7 +26,7 @@ class SignUpViewModel @Inject constructor(
     private val _signUpState = MutableStateFlow<Resource<FirebaseUser>>(Resource.Loading())
     val signUpState : Flow<Resource<FirebaseUser>> = _signUpState
 
-    private val _signUpFormState = Channel<SignUpFormState>()
+    private val _signUpFormState = Channel<FormState>()
     val signUpFormState = _signUpFormState.receiveAsFlow()
     fun createUserWithEmailAndPassword(user: User, password: String) {
         if(checkValidation(user, password)) {
@@ -42,7 +42,7 @@ class SignUpViewModel @Inject constructor(
                     _signUpState.value = Resource.Error(it.message.toString())
                 }
         }else{
-            val signUpFormState = SignUpFormState(
+            val signUpFormState = FormState(
                 validateEmail(user.email),
                 validatePassword(password)
             )
@@ -55,8 +55,8 @@ class SignUpViewModel @Inject constructor(
     private fun checkValidation(user: User, password: String) : Boolean {
         val emailValidation = validateEmail(user.email)
         val passwordValidation = validatePassword(password)
-        val shouldRegister = emailValidation is SignUpValidation.Success &&
-                passwordValidation is SignUpValidation.Success
+        val shouldRegister = emailValidation is FieldValidation.Success &&
+                passwordValidation is FieldValidation.Success
         return shouldRegister
     }
 }

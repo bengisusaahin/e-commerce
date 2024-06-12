@@ -1,21 +1,21 @@
 package com.bengisusahin.e_commerce.util
 
-fun validateEmail(email: String): SignUpValidation {
+fun validateEmail(email: String): FieldValidation {
     return if (email.isEmpty()) {
-        SignUpValidation.Error("Email cannot be empty")
+        FieldValidation.Error("Email cannot be empty")
     } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-        SignUpValidation.Error("Invalid email format")
+        FieldValidation.Error("Invalid email format")
     } else {
-        SignUpValidation.Success
+        FieldValidation.Success
     }
 }
 
-fun validatePassword(password: String): SignUpValidation {
+fun validatePassword(password: String): FieldValidation {
     return if (password.isEmpty()) {
-        SignUpValidation.Error("Password cannot be empty")
+        FieldValidation.Error("Password cannot be empty")
     } else if (password.length < 6) {
-        SignUpValidation.Error("Password must be at least 6 characters")
+        FieldValidation.Error("Password must be at least 6 characters")
     } else {
-        SignUpValidation.Success
+        FieldValidation.Success
     }
 }

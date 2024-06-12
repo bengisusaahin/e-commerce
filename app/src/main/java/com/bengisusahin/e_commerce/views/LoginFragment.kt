@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.databinding.FragmentLoginBinding
+import com.bengisusahin.e_commerce.util.FieldValidation
 import com.bengisusahin.e_commerce.util.Resource
 import com.bengisusahin.e_commerce.viewmodel.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -42,11 +43,6 @@ class LoginFragment : Fragment() {
             btnLogin.setOnClickListener {
                 val email = etEmail.text.toString().trim()
                 val password = etPassword.text.toString()
-                if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT)
-                        .show()
-                    return@setOnClickListener
-                }
                 viewModel.loginWithEmailAndPassword(email, password)
             }
 
@@ -66,6 +62,22 @@ class LoginFragment : Fragment() {
                     }
                     is Resource.Error -> {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.loginFormState.collect { state ->
+                if (state.emailError is FieldValidation.Error) {
+                    binding.etEmail.apply {
+                        error = state.emailError.message
+                        requestFocus()
+                    }
+                }
+                if (state.passwordError is FieldValidation.Error) {
+                    binding.etPassword.apply {
+                        error = state.passwordError.message
+                        requestFocus()
                     }
                 }
             }

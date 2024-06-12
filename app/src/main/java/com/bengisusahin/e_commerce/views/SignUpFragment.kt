@@ -14,10 +14,8 @@ import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.data.User
 import com.bengisusahin.e_commerce.databinding.FragmentSignUpBinding
 import com.bengisusahin.e_commerce.util.Resource
-import com.bengisusahin.e_commerce.util.SignUpValidation
+import com.bengisusahin.e_commerce.util.FieldValidation
 import com.bengisusahin.e_commerce.viewmodel.SignUpViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -82,7 +80,7 @@ class SignUpFragment : Fragment() {
 
         lifecycleScope.launch {
             viewModel.signUpFormState.collect { state ->
-                if (state.emailError is SignUpValidation.Error) {
+                if (state.emailError is FieldValidation.Error) {
                     withContext(Dispatchers.Main) {
                         binding.etEmailSignUp.apply {
                             error = state.emailError.message
@@ -90,7 +88,7 @@ class SignUpFragment : Fragment() {
                         }
                     }
                 }
-                if (state.passwordError is SignUpValidation.Error) {
+                if (state.passwordError is FieldValidation.Error) {
                     withContext(Dispatchers.Main) {
                         binding.etPasswordSignUp.apply {
                             error = state.passwordError.message
