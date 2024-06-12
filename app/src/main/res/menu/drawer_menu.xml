@@ -7,18 +7,18 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_home"
-        android:title="Homepage" />
+        android:title="@string/homepage" />
     <item
-        android:id="@+id/FavoritesFragment"
+        android:id="@+id/favoritesFragment"
         android:icon="@drawable/ic_like"
-        android:title="Favorites" />
+        android:title="@string/favorites" />
     <item
-        android:id="@+id/CartFragment"
+        android:id="@+id/cartFragment"
         android:icon="@drawable/ic_cart"
-        android:title="Cart" />
+        android:title="@string/cart" />
     <item
-        android:id="@+id/dFragment"
+        android:id="@+id/loginFragment"
         android:icon="@drawable/ic_logout"
-        android:title="Logout" />
+        android:title= "@string/logout" />
     </group>
 </menu>

@@ -15,4 +15,9 @@
     <string name="send">Send</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="icon_profile">icon Profile</string>
+    <string name="homepage">Homepage</string>
+    <string name="favorites">Favorites</string>
+    <string name="cart">Cart</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
