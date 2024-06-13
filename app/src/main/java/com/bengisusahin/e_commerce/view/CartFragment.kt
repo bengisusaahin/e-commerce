@@ -1,4 +1,4 @@
-package com.bengisusahin.e_commerce.views
+package com.bengisusahin.e_commerce.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

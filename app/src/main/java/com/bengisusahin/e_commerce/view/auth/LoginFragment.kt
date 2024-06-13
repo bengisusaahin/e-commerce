@@ -1,4 +1,4 @@
-package com.bengisusahin.e_commerce.views
+package com.bengisusahin.e_commerce.view.auth
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.databinding.FragmentLoginBinding
@@ -18,7 +17,6 @@ import com.bengisusahin.e_commerce.util.FieldValidation
 import com.bengisusahin.e_commerce.util.Resource
 import com.bengisusahin.e_commerce.viewmodel.LoginViewModel
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

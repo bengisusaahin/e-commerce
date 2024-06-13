@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.bengisusahin.e_commerce.views.SignUpFragment"
+        android:name="com.bengisusahin.e_commerce.view.auth.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.bengisusahin.e_commerce.views.LoginFragment"
+        android:name="com.bengisusahin.e_commerce.view.auth.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.bengisusahin.e_commerce.views.HomeFragment"
+        android:name="com.bengisusahin.e_commerce.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -40,12 +40,12 @@
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.bengisusahin.e_commerce.views.CartFragment"
+        android:name="com.bengisusahin.e_commerce.view.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" />
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.bengisusahin.e_commerce.views.FavoritesFragment"
+        android:name="com.bengisusahin.e_commerce.view.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
 </navigation>
