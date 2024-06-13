@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import com.bengisusahin.e_commerce.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,6 +36,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        (activity as? AppCompatActivity)?.supportActionBar?.show()
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
