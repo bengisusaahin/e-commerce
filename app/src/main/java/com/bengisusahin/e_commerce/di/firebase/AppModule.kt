@@ -1,4 +1,4 @@
-package com.bengisusahin.e_commerce.di
+package com.bengisusahin.e_commerce.di.firebase
 
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module

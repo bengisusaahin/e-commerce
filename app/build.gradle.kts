@@ -64,4 +64,13 @@ dependencies {
     // Hilt library for dependency injection
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+    // retrofit library for API calls
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    // LiveData
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    //Glide
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
+
 }
