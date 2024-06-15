@@ -1,9 +1,11 @@
 package com.bengisusahin.e_commerce.util
 
-fun validateUsername(username: String): FieldValidation {
-    return if (username.isEmpty()) {
-        FieldValidation.Error("Username cannot be empty")
-    }  else {
+fun validateEmail(email: String): FieldValidation {
+    return if (email.isEmpty()) {
+        FieldValidation.Error("Email cannot be empty")
+    } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        FieldValidation.Error("Invalid email format")
+    } else {
         FieldValidation.Success
     }
 }
