@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/cart_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:lines="1"
+            android:singleLine="true"
+            android:ems="4"
+            android:ellipsize="end"
+            tools:text="Product Name"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/cart_item_img_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/cart_item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            tools:text="Product Price"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/cart_item_img_view"
+            app:layout_constraintTop_toBottomOf="@+id/cart_item_title" />
+
+        <TextView
+            android:id="@+id/cart_item_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            tools:text="Product ID"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/cart_item_img_view"
+            app:layout_constraintTop_toBottomOf="@+id/cart_item_price" />
+
+
+        <ImageButton
+            android:id="@+id/cart_item_btn_dec"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:background="@null"
+            android:contentDescription="@string/decrement_product_count_button"
+            android:src="@drawable/ic_minus"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cart_item_quantity"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/cart_item_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="1"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cart_item_btn_dec"
+            app:layout_constraintStart_toEndOf="@+id/cart_item_btn_inc"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/cart_item_btn_inc"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="128dp"
+            android:background="@null"
+            android:contentDescription="@string/increment_product_count_button"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cart_item_quantity"
+            app:layout_constraintStart_toEndOf="@+id/cart_item_img_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/cart_item_img_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/product_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -89,6 +89,7 @@ class LoginFragment : Fragment() {
                 }
             }
         }
+
         lifecycleScope.launch {
             viewModel.loginFormState.collect { state ->
                 if (state.emailError is FieldValidation.Error) {

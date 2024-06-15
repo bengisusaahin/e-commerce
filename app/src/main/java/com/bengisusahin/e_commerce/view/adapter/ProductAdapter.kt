@@ -24,7 +24,7 @@ class ProductAdapter(private val productList : List<Product>, private val listen
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.binding.textViewProductName.text = productList[position].title
-        holder.binding.textViewProductPrice.text = productList[position].price.toString()
+        holder.binding.textViewProductPrice.text = productList[position].price.toString() + "₺"
         if (productList[position].images.isNotEmpty()) {
             Glide.with(holder.itemView.context).load(productList[position].images[0]).into(holder.binding.imageViewProduct)
         }

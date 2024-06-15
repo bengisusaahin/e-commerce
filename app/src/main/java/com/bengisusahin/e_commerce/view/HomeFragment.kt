@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bengisusahin.e_commerce.data.Product
 import com.bengisusahin.e_commerce.databinding.FragmentHomeBinding
@@ -37,7 +38,7 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerviewHome.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerviewHome.layoutManager = GridLayoutManager(requireContext(),2)
 
         viewModel.products.observe(viewLifecycleOwner) { resource ->
             when (resource) {
