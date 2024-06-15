@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.data.User
 import com.bengisusahin.e_commerce.databinding.FragmentSignUpBinding
-import com.bengisusahin.e_commerce.util.Resource
+import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.util.FieldValidation
 import com.bengisusahin.e_commerce.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,16 +61,16 @@ class SignUpFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.signUpState.collect { state ->
                 when (state) {
-                    is Resource.Loading -> {
+                    is ResourceResponseState.Loading -> {
                         Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
                     }
 
-                    is Resource.Success -> {
+                    is ResourceResponseState.Success -> {
                         Log.d("SignUpFragment", "User signed up successfully ${state.data.toString()}")
                         findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
                     }
 
-                    is Resource.Error -> {
+                    is ResourceResponseState.Error -> {
                         Log.d("SignUpFragment", "Error: ${state.message}")
                         Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
                     }

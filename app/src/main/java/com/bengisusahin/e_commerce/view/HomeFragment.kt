@@ -8,18 +8,17 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bengisusahin.e_commerce.data.Product
 import com.bengisusahin.e_commerce.databinding.FragmentHomeBinding
-import com.bengisusahin.e_commerce.util.Resource
+import com.bengisusahin.e_commerce.util.ScreenState
 import com.bengisusahin.e_commerce.view.adapter.ProductAdapter
-import com.bengisusahin.e_commerce.viewmodel.ProductViewModel
+import com.bengisusahin.e_commerce.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), ProductAdapter.Listener {
     private lateinit var binding : FragmentHomeBinding
-    private val viewModel: ProductViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
     private var productAdapter : ProductAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,18 +41,18 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
 
         viewModel.products.observe(viewLifecycleOwner) { resource ->
             when (resource) {
-                is Resource.Loading -> {
+                is ScreenState.Loading -> {
                     // Show loading indicator
                 }
 
-                is Resource.Success -> {
+                is ScreenState.Success -> {
                     // Update RecyclerView with product list
-                    resource.data?.let { products ->
-                        binding.recyclerviewHome.adapter = ProductAdapter(products.products, this)
+                    resource.uiData?.let { products ->
+                        binding.recyclerviewHome.adapter = ProductAdapter(products, this)
                     }
                 }
 
-                is Resource.Error -> {
+                is ScreenState.Error -> {
                     // Show error message
                 }
             }
@@ -61,6 +60,7 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
     }
 
     override fun onItemClick(product: Product) {
+        // add product to cart
         //viewModel.addToCart(product)
     }
 

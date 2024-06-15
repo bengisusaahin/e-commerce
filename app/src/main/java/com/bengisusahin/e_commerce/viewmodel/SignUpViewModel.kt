@@ -2,7 +2,7 @@ package com.bengisusahin.e_commerce.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.bengisusahin.e_commerce.data.User
-import com.bengisusahin.e_commerce.util.Resource
+import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.util.FormState
 import com.bengisusahin.e_commerce.util.FieldValidation
 import com.bengisusahin.e_commerce.util.validateEmail
@@ -23,23 +23,23 @@ class SignUpViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
 
-    private val _signUpState = MutableStateFlow<Resource<FirebaseUser>>(Resource.Loading())
-    val signUpState : Flow<Resource<FirebaseUser>> = _signUpState
+    private val _signUpState = MutableStateFlow<ResourceResponseState<FirebaseUser>>(ResourceResponseState.Loading())
+    val signUpState : Flow<ResourceResponseState<FirebaseUser>> = _signUpState
 
     private val _signUpFormState = Channel<FormState>()
     val signUpFormState = _signUpFormState.receiveAsFlow()
     fun createUserWithEmailAndPassword(user: User, password: String) {
         if(checkValidation(user, password)) {
             runBlocking {
-                _signUpState.emit(Resource.Loading())
+                _signUpState.emit(ResourceResponseState.Loading())
             }
             firebaseAuth.createUserWithEmailAndPassword(user.email, password)
                 .addOnSuccessListener {
                     it.user?.let { user ->
-                        _signUpState.value = Resource.Success(user)
+                        _signUpState.value = ResourceResponseState.Success(user)
                     }
                 }.addOnFailureListener {
-                    _signUpState.value = Resource.Error(it.message.toString())
+                    _signUpState.value = ResourceResponseState.Error(it.message.toString())
                 }
         }else{
             val signUpFormState = FormState(

@@ -3,7 +3,7 @@ package com.bengisusahin.e_commerce.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bengisusahin.e_commerce.util.FieldValidation
-import com.bengisusahin.e_commerce.util.Resource
+import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.util.FormState
 import com.bengisusahin.e_commerce.util.validateEmail
 import com.bengisusahin.e_commerce.util.validatePassword
@@ -22,13 +22,13 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ): ViewModel(){
-    private val _loginState = MutableSharedFlow<Resource<FirebaseUser>>()
+    private val _loginState = MutableSharedFlow<ResourceResponseState<FirebaseUser>>()
     val loginState = _loginState.asSharedFlow()
 
     private val _loginFormState = Channel<FormState>()
     val loginFormState = _loginFormState.receiveAsFlow()
 
-    private val _resetPasswordState = MutableSharedFlow<Resource<String>>()
+    private val _resetPasswordState = MutableSharedFlow<ResourceResponseState<String>>()
     val resetPasswordState = _resetPasswordState.asSharedFlow()
 
     fun loginWithEmailAndPassword(email: String, password: String){
@@ -37,17 +37,17 @@ class LoginViewModel @Inject constructor(
 
         if (emailValidation is FieldValidation.Success &&
             passwordValidation is FieldValidation.Success) {
-            viewModelScope.launch { _loginState.emit(Resource.Loading()) }
+            viewModelScope.launch { _loginState.emit(ResourceResponseState.Loading()) }
             firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
                     viewModelScope.launch {
                         it.user?.let { user ->
-                            _loginState.emit(Resource.Success(user))
+                            _loginState.emit(ResourceResponseState.Success(user))
                         }
                     }
                 }.addOnFailureListener {
                     viewModelScope.launch {
-                        _loginState.emit(Resource.Error(it.message.toString()))
+                        _loginState.emit(ResourceResponseState.Error(it.message.toString()))
                     }
                 }
         }else{
@@ -60,17 +60,17 @@ class LoginViewModel @Inject constructor(
 
     fun resetPassword(email: String) {
         viewModelScope.launch {
-            _resetPasswordState.emit(Resource.Loading())
+            _resetPasswordState.emit(ResourceResponseState.Loading())
         }
         firebaseAuth
             .sendPasswordResetEmail(email)
             .addOnSuccessListener {
                 viewModelScope.launch {
-                    _resetPasswordState.emit(Resource.Success(email))
+                    _resetPasswordState.emit(ResourceResponseState.Success(email))
                 }
             }.addOnFailureListener {
                 viewModelScope.launch {
-                    _resetPasswordState.emit(Resource.Error(it.message.toString()))
+                    _resetPasswordState.emit(ResourceResponseState.Error(it.message.toString()))
                 }
             }
         }

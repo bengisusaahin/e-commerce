@@ -14,7 +14,7 @@ import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.databinding.FragmentLoginBinding
 import com.bengisusahin.e_commerce.dialog.setUpBottomSheetDialog
 import com.bengisusahin.e_commerce.util.FieldValidation
-import com.bengisusahin.e_commerce.util.Resource
+import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.viewmodel.LoginViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,12 +62,12 @@ class LoginFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.resetPasswordState.collect{
                 when(it){
-                    is Resource.Loading -> {
+                    is ResourceResponseState.Loading -> {
                     }
-                    is Resource.Success -> {
+                    is ResourceResponseState.Success -> {
                         Snackbar.make(binding.root, "Reset password link sent to your email", Snackbar.LENGTH_LONG).show()
                     }
-                    is Resource.Error -> {
+                    is ResourceResponseState.Error -> {
                         Snackbar.make(requireView(), "Error: ${it.message}", Snackbar.LENGTH_LONG).show()
                     }
                 }
@@ -77,13 +77,13 @@ class LoginFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.loginState.collect {
                 when (it) {
-                    is Resource.Loading -> {
+                    is ResourceResponseState.Loading -> {
                         Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
                     }
-                    is Resource.Success -> {
+                    is ResourceResponseState.Success -> {
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     }
-                    is Resource.Error -> {
+                    is ResourceResponseState.Error -> {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                     }
                 }

@@ -24,10 +24,8 @@ class ProductAdapter(private val productList : List<Product>, private val listen
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.binding.textViewProductName.text = productList[position].title
-        holder.binding.textViewProductPrice.text = productList[position].price.toString() + "₺"
-        if (productList[position].images.isNotEmpty()) {
-            Glide.with(holder.itemView.context).load(productList[position].images[0]).into(holder.binding.imageViewProduct)
-        }
+        holder.binding.textViewProductPrice.text = productList[position].price.toString() + " ₺"
+        Glide.with(holder.itemView.context).load(productList[position].images[0]).into(holder.binding.imageViewProduct)
         holder.binding.buttonAddToCart.setOnClickListener {
             Toast.makeText(it.context,"Added to cart: ${productList[position].title}",Toast.LENGTH_LONG).show()
             listener.onItemClick(productList[position])
