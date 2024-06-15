@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bengisusahin.e_commerce.data.Product
 import com.bengisusahin.e_commerce.databinding.FragmentHomeBinding
@@ -62,6 +63,11 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
     override fun onItemClick(product: Product) {
         // add product to cart
         //viewModel.addToCart(product)
+        navigateToProductDetail(product.id)
     }
 
+    private fun navigateToProductDetail(productId: Int) {
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(productId)
+        findNavController().navigate(action)
+    }
 }

@@ -30,6 +30,9 @@ class ProductAdapter(private val productList : List<Product>, private val listen
             Toast.makeText(it.context,"Added to cart: ${productList[position].title}",Toast.LENGTH_LONG).show()
             listener.onItemClick(productList[position])
         }
+        holder.binding.root.setOnClickListener {
+            listener.onItemClick(productList[position])
+        }
     }
 
     interface Listener {

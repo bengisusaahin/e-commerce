@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -48,4 +51,13 @@
         android:name="com.bengisusahin.e_commerce.view.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.bengisusahin.e_commerce.view.DetailFragment"
+        android:label="DetailFragment"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="productId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

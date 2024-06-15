@@ -1,5 +1,6 @@
 package com.bengisusahin.e_commerce.repository
 
+import com.bengisusahin.e_commerce.data.Product
 import com.bengisusahin.e_commerce.data.Products
 import com.bengisusahin.e_commerce.service.ProductService
 import com.bengisusahin.e_commerce.util.ResourceResponseState
@@ -22,4 +23,14 @@ class ProductRepository @Inject constructor(
         .catch {
             emit(ResourceResponseState.Error(it.message.toString()))
         }
+
+    fun getSingleProduct(productId: Int): Flow<ResourceResponseState<Product>> = flow {
+        emit(ResourceResponseState.Loading())
+
+        val product = productService.getSingleProductFromApi(productId)
+        emit(ResourceResponseState.Success(product))
+    }.flowOn(Dispatchers.IO)
+        .catch {
+            emit(ResourceResponseState.Error(it.message.toString()))
+    }
 }
