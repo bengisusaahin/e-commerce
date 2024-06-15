@@ -20,11 +20,13 @@
     <string name="cart">Cart</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="add_to_cart">Add to cart</string>
+    <string name="add_to_cart">Add to Cart</string>
     <string name="product_image">product image</string>
     <string name="product_title">Product title</string>
     <string name="product_price">Product price</string>
     <string name="purchase">Purchase</string>
     <string name="decrement_product_count_button">Decrement Product Count Button</string>
     <string name="increment_product_count_button">Increment Product Count Button</string>
+    <string name="add_to_favorites">Add to Favorites</string>
+    <string name="progress_bar">Progress Bar</string>
 </resources>

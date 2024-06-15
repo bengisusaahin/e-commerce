@@ -15,7 +15,7 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/cart_item_title"
+            android:id="@+id/cartProductTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -27,33 +27,33 @@
             tools:text="Product Name"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/cart_item_img_view"
+            app:layout_constraintStart_toEndOf="@+id/cartProductImageView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/cart_item_price"
+            android:id="@+id/cartProductPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             tools:text="Product Price"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/cart_item_img_view"
-            app:layout_constraintTop_toBottomOf="@+id/cart_item_title" />
+            app:layout_constraintStart_toEndOf="@+id/cartProductImageView"
+            app:layout_constraintTop_toBottomOf="@+id/cartProductTitle" />
 
         <TextView
-            android:id="@+id/cart_item_id"
+            android:id="@+id/cartProductId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             tools:text="Product ID"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/cart_item_img_view"
-            app:layout_constraintTop_toBottomOf="@+id/cart_item_price" />
+            app:layout_constraintStart_toEndOf="@+id/cartProductImageView"
+            app:layout_constraintTop_toBottomOf="@+id/cartProductPrice" />
 
 
         <ImageButton
-            android:id="@+id/cart_item_btn_dec"
+            android:id="@+id/cartProductDecButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="16dp"
@@ -62,11 +62,11 @@
             android:src="@drawable/ic_minus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cart_item_quantity"
+            app:layout_constraintStart_toEndOf="@+id/cartProductCount"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/cart_item_quantity"
+            android:id="@+id/cartProductCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="1"
@@ -74,12 +74,12 @@
             android:layout_margin="5dp"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cart_item_btn_dec"
-            app:layout_constraintStart_toEndOf="@+id/cart_item_btn_inc"
+            app:layout_constraintEnd_toStartOf="@+id/cartProductDecButton"
+            app:layout_constraintStart_toEndOf="@+id/cartProductIncButton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/cart_item_btn_inc"
+            android:id="@+id/cartProductIncButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="128dp"
@@ -87,12 +87,12 @@
             android:contentDescription="@string/increment_product_count_button"
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cart_item_quantity"
-            app:layout_constraintStart_toEndOf="@+id/cart_item_img_view"
+            app:layout_constraintEnd_toStartOf="@+id/cartProductCount"
+            app:layout_constraintStart_toEndOf="@+id/cartProductImageView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/cart_item_img_view"
+            android:id="@+id/cartProductImageView"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="8dp"
