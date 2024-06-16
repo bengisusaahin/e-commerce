@@ -40,7 +40,7 @@ class LoginViewModel @Inject constructor(
                 try {
                     loginUseCase(LoginRequest(username, password)).collect { response ->
                         _loginState.emit(response)
-                    }
+                        }
                 } catch (e: HttpException) {
                     val errorMessage = when (e.code()) {
                         404 -> "No found user"
