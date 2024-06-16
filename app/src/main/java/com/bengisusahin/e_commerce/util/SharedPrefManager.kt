@@ -2,8 +2,10 @@ package com.bengisusahin.e_commerce.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import javax.inject.Inject
 
-class SharedPrefManager(context: Context) {
+class SharedPrefManager@Inject constructor(
+    context: Context) {
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences("sharedPrefsFile", Context.MODE_PRIVATE)
 
     fun saveAuthToken(token: String) {
