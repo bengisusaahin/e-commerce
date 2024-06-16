@@ -14,6 +14,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bengisusahin.e_commerce.R
+import com.bengisusahin.e_commerce.util.FieldValidation
+import com.bengisusahin.e_commerce.util.FormState
 import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,11 +41,19 @@ class LoginFragment : Fragment() {
 
         composeView.setContent {
             val loginState by viewModel.loginState.collectAsState(initial = ResourceResponseState.Loading())
-
-                LoginScreen(state = loginState, onLoginClick =
-                { username, password ->
-                    viewModel.login(username, password)
-                })
+            val formState by viewModel.loginFormState.collectAsState(
+                initial = FormState(
+                    usernameError = FieldValidation.Success,
+                    passwordError = FieldValidation.Success
+                )
+            )
+                LoginScreen(
+                    state = loginState,
+                    formState = formState,
+                    onLoginClick = { username, password ->
+                        viewModel.login(username, password)
+                    }
+                )
         }
         lifecycleScope.launch {
             viewModel.loginState.collect {

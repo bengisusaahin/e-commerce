@@ -11,25 +11,24 @@ import com.bengisusahin.e_commerce.util.FormState
 import com.bengisusahin.e_commerce.util.validateUsername
 import com.bengisusahin.e_commerce.util.validatePassword
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val authService: AuthService
-): ViewModel(){
+) : ViewModel() {
     private val _loginState = MutableSharedFlow<ResourceResponseState<User>>()
     val loginState = _loginState.asSharedFlow()
 
-    private val _loginFormState = Channel<FormState>()
-    val loginFormState = _loginFormState.receiveAsFlow()
+    private val _loginFormState = MutableSharedFlow<FormState>()
+    val loginFormState = _loginFormState.asSharedFlow()
 
-    fun login(username: String, password: String){
+    fun login(username: String, password: String) {
         val usernameValidation = validateUsername(username)
         val passwordValidation = validatePassword(password)
 
@@ -39,19 +38,22 @@ class LoginViewModel @Inject constructor(
                 _loginState.emit(ResourceResponseState.Loading())
                 try {
                     val response = authService.login(LoginRequest(username, password))
-                    viewModelScope.launch {
-                        _loginState.emit(ResourceResponseState.Success(response))
+                    _loginState.emit(ResourceResponseState.Success(response))
+                } catch (e: HttpException) {
+                    val errorMessage = when (e.code()) {
+                        404 -> "No found user"
+                        401,403 -> "Wrong password or username"
+                        else -> "An error occurred"
                     }
+                    _loginState.emit(ResourceResponseState.Error(errorMessage))
                 } catch (e: Exception) {
-                    viewModelScope.launch {
-                        _loginState.emit(ResourceResponseState.Error(e.message.toString()))
-                    }
+                    _loginState.emit(ResourceResponseState.Error(e.message.toString()))
                 }
             }
-        }else{
+        } else {
             val loginFormState = FormState(usernameValidation, passwordValidation)
-            runBlocking{
-                _loginFormState.send(loginFormState)
+            viewModelScope.launch {
+                _loginFormState.emit(loginFormState)
             }
         }
     }

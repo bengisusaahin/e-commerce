@@ -6,6 +6,6 @@ sealed class FieldValidation() {
 }
 
 data class FormState(
-    val emailError: FieldValidation,
+    val usernameError: FieldValidation,
     val passwordError: FieldValidation
 )
