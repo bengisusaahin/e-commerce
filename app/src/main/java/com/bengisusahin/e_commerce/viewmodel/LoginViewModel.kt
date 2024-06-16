@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bengisusahin.e_commerce.data.dataAuth.LoginRequest
 import com.bengisusahin.e_commerce.data.dataAuth.User
+import com.bengisusahin.e_commerce.di.usecase.LoginUseCase
 import com.bengisusahin.e_commerce.service.AuthService
 import com.bengisusahin.e_commerce.util.FieldValidation
 import com.bengisusahin.e_commerce.util.ResourceResponseState
@@ -20,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authService: AuthService
+    private val loginUseCase: LoginUseCase
 ) : ViewModel() {
     private val _loginState = MutableSharedFlow<ResourceResponseState<User>>()
     val loginState = _loginState.asSharedFlow()
@@ -37,8 +38,9 @@ class LoginViewModel @Inject constructor(
             viewModelScope.launch {
                 _loginState.emit(ResourceResponseState.Loading())
                 try {
-                    val response = authService.login(LoginRequest(username, password))
-                    _loginState.emit(ResourceResponseState.Success(response))
+                    loginUseCase(LoginRequest(username, password)).collect { response ->
+                        _loginState.emit(response)
+                    }
                 } catch (e: HttpException) {
                     val errorMessage = when (e.code()) {
                         404 -> "No found user"
