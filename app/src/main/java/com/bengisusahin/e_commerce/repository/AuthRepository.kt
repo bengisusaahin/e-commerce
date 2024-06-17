@@ -25,4 +25,7 @@ class AuthRepository @Inject constructor(
         .catch {
             emit(ResourceResponseState.Error(it.message.toString()))
         }
+    fun getCurrentUser(): Flow<User> = flow {
+        emit(authService.getCurrentUser())
+    }.flowOn(Dispatchers.IO)
 }

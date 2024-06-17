@@ -15,7 +15,7 @@ class FavoriteProductsRepository @Inject constructor(
     suspend fun deleteFavoriteProduct(favoriteProducts: FavoriteProducts) {
         favoriteProductDao.deleteFavoriteProduct(favoriteProducts)
     }
-    fun getAllFavoriteProducts() : Flow<List<FavoriteProducts>> {
-        return favoriteProductDao.getAllFavoriteProducts()
+    fun getAllFavoriteProducts(userId: Long) : Flow<List<FavoriteProducts>> {
+        return favoriteProductDao.getAllFavoriteProducts(userId)
     }
 }

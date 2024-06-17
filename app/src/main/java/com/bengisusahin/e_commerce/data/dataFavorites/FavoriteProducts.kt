@@ -9,6 +9,8 @@ data class FavoriteProducts(
     // Primary key for the favorite products
     @PrimaryKey(autoGenerate = true)
     val fid: Int,
+    // user id from api for the favorite products of the user
+    val uid: Long,
     // product id from api
     val pid: Int,
     val title: String,

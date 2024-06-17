@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bengisusahin.e_commerce.data.Product
 import com.bengisusahin.e_commerce.data.dataFavorites.FavoriteProducts
+import com.bengisusahin.e_commerce.di.usecase.DeleteFavoriteProductUseCase
+import com.bengisusahin.e_commerce.di.usecase.FavoriteProductUseCase
 import com.bengisusahin.e_commerce.di.usecase.GetAllProductsUseCase
 import com.bengisusahin.e_commerce.di.usecase.InsertFavoriteProductUseCase
 import com.bengisusahin.e_commerce.util.ResourceResponseState
@@ -17,8 +19,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val favoriteProductUseCase: FavoriteProductUseCase,
     private val getAllProductsUseCase: GetAllProductsUseCase,
-    private val insertFavoriteProductUseCase: InsertFavoriteProductUseCase
+    private val insertFavoriteProductUseCase: InsertFavoriteProductUseCase,
+    private val deleteFavoriteProductUseCase: DeleteFavoriteProductUseCase
 ): ViewModel(){
 
     private val _products = MutableLiveData<ScreenState<List<Product>>>()
@@ -42,9 +46,16 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun insertFavoriteProduct(favoriteProduct: FavoriteProducts) {
+    fun insertFavoriteProduct(product: Product) {
         viewModelScope.launch {
+            val favoriteProduct = favoriteProductUseCase(product)
             insertFavoriteProductUseCase(favoriteProduct)
+        }
+    }
+
+    fun deleteFavoriteProduct(favoriteProduct: FavoriteProducts) {
+        viewModelScope.launch {
+            deleteFavoriteProductUseCase(favoriteProduct)
         }
     }
 }

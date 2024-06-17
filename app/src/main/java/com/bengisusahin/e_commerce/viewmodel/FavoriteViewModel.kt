@@ -16,21 +16,16 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
     private val getAllFavoriteProductsUseCase: GetAllFavoriteProductsUseCase,
-    private val deleteFavoriteUseCase: DeleteFavoriteProductUseCase,
+    private val deleteFavoriteUseCase: DeleteFavoriteProductUseCase
 ) : ViewModel() {
     private val _favoriteProducts = MutableLiveData<ScreenState<List<FavoriteProducts>>>()
     val favoriteProducts: LiveData<ScreenState<List<FavoriteProducts>>> get() = _favoriteProducts
 
-    init {
-        getAllFavoriteProducts()
-        deleteFavoriteUseCase
-    }
-
-    private fun getAllFavoriteProducts() {
+    fun getAllFavoriteProducts(userId: Long) {
         viewModelScope.launch {
             try {
                 _favoriteProducts.value = ScreenState.Loading
-                getAllFavoriteProductsUseCase().collect { result ->
+                getAllFavoriteProductsUseCase(userId).collect { result ->
                     _favoriteProducts.value = ScreenState.Success(result)
                 }
             } catch (e: Exception) {

@@ -16,6 +16,9 @@ import com.bengisusahin.e_commerce.util.ScreenState
 import com.bengisusahin.e_commerce.view.adapter.ProductAdapter
 import com.bengisusahin.e_commerce.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), ProductAdapter.Listener {
@@ -74,7 +77,17 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
 
     override fun onFavoriteClick(product: Product) {
         // add product to favorites
-        val favoriteProduct = FavoriteProducts(0,product.id, product.title, product.price, product.images[0],product.description)
-        viewModel.insertFavoriteProduct(favoriteProduct)
+        viewModel.insertFavoriteProduct(product)
     }
 }
+
+    /*
+    override fun onFavoriteClick(product: Product) {
+    // Check if the product is already in favorites
+    if (isProductInFavorites(product)) {
+        viewModel.removeFavoriteProduct(product)
+    } else {
+        viewModel.addFavoriteProduct(product)
+    }
+}
+     */

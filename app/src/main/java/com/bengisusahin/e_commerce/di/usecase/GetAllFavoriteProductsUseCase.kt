@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetAllFavoriteProductsUseCase @Inject constructor(
     private val favoriteProductsRepository: FavoriteProductsRepository
 ){
-    operator fun invoke(): Flow<List<FavoriteProducts>>{
-        return favoriteProductsRepository.getAllFavoriteProducts()
+    operator fun invoke(userId: Long): Flow<List<FavoriteProducts>>{
+        return favoriteProductsRepository.getAllFavoriteProducts(userId)
     }
 }
