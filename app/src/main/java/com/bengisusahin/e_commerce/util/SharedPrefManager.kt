@@ -2,6 +2,7 @@ package com.bengisusahin.e_commerce.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import javax.inject.Inject
 
 class SharedPrefManager@Inject constructor(
@@ -12,6 +13,8 @@ class SharedPrefManager@Inject constructor(
         val editor = sharedPreferences.edit()
         editor.putString("KEY_AUTH_TOKEN", token)
         editor.apply()
+
+        Log.d("SharedPrefManager", "saveAuthToken: $token")
     }
 
     fun fetchAuthToken(): String? {
