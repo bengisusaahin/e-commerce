@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bengisusahin.e_commerce.data.Product
+import com.bengisusahin.e_commerce.data.dataFavorites.FavoriteProducts
 import com.bengisusahin.e_commerce.di.usecase.GetAllProductsUseCase
+import com.bengisusahin.e_commerce.di.usecase.InsertFavoriteProductUseCase
 import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getAllProductsUseCase: GetAllProductsUseCase
+    private val getAllProductsUseCase: GetAllProductsUseCase,
+    private val insertFavoriteProductUseCase: InsertFavoriteProductUseCase
 ): ViewModel(){
 
     private val _products = MutableLiveData<ScreenState<List<Product>>>()
@@ -36,6 +39,12 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun insertFavoriteProduct(favoriteProduct: FavoriteProducts) {
+        viewModelScope.launch {
+            insertFavoriteProductUseCase(favoriteProduct)
         }
     }
 }

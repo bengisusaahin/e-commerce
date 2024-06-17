@@ -8,13 +8,39 @@ import com.bengisusahin.e_commerce.data.Product
 import com.bengisusahin.e_commerce.databinding.ProductRecyclerRowBinding
 import com.bumptech.glide.Glide
 
-class ProductAdapter(private val productList : List<Product>, private val listener : Listener) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
-    class ProductViewHolder(val binding : ProductRecyclerRowBinding) : RecyclerView.ViewHolder(binding.root)  {
+class ProductAdapter(
+    private val productList: List<Product>,
+    private val listener: Listener
+) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
+    inner class ProductViewHolder(val binding: ProductRecyclerRowBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(product: Product) {
+            binding.apply {
+                textViewProductName.text = product.title
+                textViewProductPrice.text = product.price.toString() + " ₺"
+                Glide.with(itemView.context).load(product.images[0]).into(imageViewProduct)
+
+                checkBoxFavorite.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        // Notify that product is added to favorites
+                        listener.onFavoriteClick(product)
+                    }
+                }
+
+                buttonAddToCart.setOnClickListener {
+                    Toast.makeText(it.context, "Added to cart: ${product.title}", Toast.LENGTH_LONG).show()
+                    listener.onItemClick(product)
+                }
+
+                root.setOnClickListener {
+                    listener.onItemClick(product)
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val binding = ProductRecyclerRowBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ProductRecyclerRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductViewHolder(binding)
     }
 
@@ -23,19 +49,11 @@ class ProductAdapter(private val productList : List<Product>, private val listen
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.binding.textViewProductName.text = productList[position].title
-        holder.binding.textViewProductPrice.text = productList[position].price.toString() + " ₺"
-        Glide.with(holder.itemView.context).load(productList[position].images[0]).into(holder.binding.imageViewProduct)
-        holder.binding.buttonAddToCart.setOnClickListener {
-            Toast.makeText(it.context,"Added to cart: ${productList[position].title}",Toast.LENGTH_LONG).show()
-            listener.onItemClick(productList[position])
-        }
-        holder.binding.root.setOnClickListener {
-            listener.onItemClick(productList[position])
-        }
+        holder.bind(productList[position])
     }
 
     interface Listener {
-        fun onItemClick(product : Product)
+        fun onItemClick(product: Product)
+        fun onFavoriteClick(product: Product)
     }
 }

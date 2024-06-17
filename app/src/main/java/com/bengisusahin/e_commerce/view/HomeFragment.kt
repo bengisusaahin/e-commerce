@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bengisusahin.e_commerce.data.Product
+import com.bengisusahin.e_commerce.data.dataFavorites.FavoriteProducts
 import com.bengisusahin.e_commerce.databinding.FragmentHomeBinding
 import com.bengisusahin.e_commerce.util.ScreenState
 import com.bengisusahin.e_commerce.view.adapter.ProductAdapter
@@ -69,5 +70,11 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
     private fun navigateToProductDetail(productId: Int) {
         val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(productId)
         findNavController().navigate(action)
+    }
+
+    override fun onFavoriteClick(product: Product) {
+        // add product to favorites
+        val favoriteProduct = FavoriteProducts(0,product.id, product.title, product.price, product.images[0],product.description)
+        viewModel.insertFavoriteProduct(favoriteProduct)
     }
 }

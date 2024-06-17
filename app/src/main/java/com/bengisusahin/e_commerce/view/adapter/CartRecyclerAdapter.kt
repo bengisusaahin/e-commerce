@@ -7,7 +7,8 @@ import com.bengisusahin.e_commerce.data.Product
 import com.bengisusahin.e_commerce.databinding.CartRecyclerRowBinding
 import com.bumptech.glide.Glide
 
-class CartRecyclerAdapter(val productList : List<Product>) : RecyclerView.Adapter<CartRecyclerAdapter.CartRowHolder>() {
+class CartRecyclerAdapter(val productList : List<Product>)
+    : RecyclerView.Adapter<CartRecyclerAdapter.CartRowHolder>() {
     class CartRowHolder(val binding : CartRecyclerRowBinding ) : RecyclerView.ViewHolder(binding.root) {
 
     }

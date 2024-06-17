@@ -29,4 +29,6 @@
     <string name="increment_product_count_button">Increment Product Count Button</string>
     <string name="add_to_favorites">Add to Favorites</string>
     <string name="progress_bar">Progress Bar</string>
+    <string name="favorite_product_image">Favorite Product Image</string>
+    <string name="favorite_icon">Favorite Icon</string>
 </resources>
