@@ -3,27 +3,46 @@ package com.bengisusahin.e_commerce.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
+import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.data.Product
 import com.bengisusahin.e_commerce.databinding.ProductRecyclerRowBinding
+import com.bengisusahin.e_commerce.viewmodel.HomeViewModel
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProductAdapter(
     private val productList: List<Product>,
-    private val listener: Listener
+    private val listener: Listener,
+    private val viewModel: HomeViewModel
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     inner class ProductViewHolder(val binding: ProductRecyclerRowBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: Product) {
+         fun bind(product: Product) {
             binding.apply {
                 textViewProductName.text = product.title
                 textViewProductPrice.text = product.price.toString() + " ₺"
                 Glide.with(itemView.context).load(product.images[0]).into(imageViewProduct)
 
+                // Check if the product is in favorites
+                viewModel.viewModelScope.launch {
+                    val isFavorite = viewModel.isFavorite(product.id)
+                    checkBoxFavorite.isChecked = isFavorite
+                }
+
                 checkBoxFavorite.setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked) {
-                        // Notify that product is added to favorites
-                        listener.onFavoriteClick(product)
+                        // If the checkbox is now checked, set the favorite icon and add the product to favorites
+                        checkBoxFavorite.setButtonDrawable(R.drawable.ic_like_filled)
+                        viewModel.insertFavoriteProduct(product)
+                    } else {
+                        // If the checkbox is now unchecked, set the not favorite icon and remove the product from favorites
+                        checkBoxFavorite.setButtonDrawable(R.drawable.ic_like)
+                        //viewModel.deleteFavoriteProduct(product)
                     }
                 }
 
@@ -54,6 +73,5 @@ class ProductAdapter(
 
     interface Listener {
         fun onItemClick(product: Product)
-        fun onFavoriteClick(product: Product)
     }
 }

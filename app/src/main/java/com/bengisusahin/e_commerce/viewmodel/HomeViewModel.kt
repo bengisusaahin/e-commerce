@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bengisusahin.e_commerce.data.Product
 import com.bengisusahin.e_commerce.data.dataFavorites.FavoriteProducts
+import com.bengisusahin.e_commerce.di.usecase.CheckFavoriteProductUseCase
 import com.bengisusahin.e_commerce.di.usecase.DeleteFavoriteProductUseCase
 import com.bengisusahin.e_commerce.di.usecase.FavoriteProductUseCase
+import com.bengisusahin.e_commerce.di.usecase.GetAllFavoriteProductsUseCase
 import com.bengisusahin.e_commerce.di.usecase.GetAllProductsUseCase
 import com.bengisusahin.e_commerce.di.usecase.InsertFavoriteProductUseCase
 import com.bengisusahin.e_commerce.util.ResourceResponseState
@@ -21,8 +23,10 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val favoriteProductUseCase: FavoriteProductUseCase,
     private val getAllProductsUseCase: GetAllProductsUseCase,
+    private val getAllFavoriteProductsUseCase: GetAllFavoriteProductsUseCase,
     private val insertFavoriteProductUseCase: InsertFavoriteProductUseCase,
-    private val deleteFavoriteProductUseCase: DeleteFavoriteProductUseCase
+    private val deleteFavoriteProductUseCase: DeleteFavoriteProductUseCase,
+    private val checkFavoriteProductUseCase: CheckFavoriteProductUseCase
 ): ViewModel(){
 
     private val _products = MutableLiveData<ScreenState<List<Product>>>()
@@ -31,6 +35,7 @@ class HomeViewModel @Inject constructor(
     init {
         getAllProducts()
     }
+
     private fun getAllProducts(){
         viewModelScope.launch {
             getAllProductsUseCase().collectLatest { resource ->
@@ -53,9 +58,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun deleteFavoriteProduct(favoriteProduct: FavoriteProducts) {
+    fun deleteFavoriteProduct(favoriteProducts: FavoriteProducts) {
         viewModelScope.launch {
-            deleteFavoriteProductUseCase(favoriteProduct)
+            deleteFavoriteProductUseCase(favoriteProducts)
         }
+    }
+
+    suspend fun isFavorite(productId: Int): Boolean {
+        return checkFavoriteProductUseCase(productId)
     }
 }

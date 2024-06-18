@@ -7,7 +7,7 @@ import javax.inject.Inject
 class DeleteFavoriteProductUseCase @Inject constructor(
     private val favoriteProductsRepository: FavoriteProductsRepository
 ){
-    suspend operator fun invoke(favoriteProducts: FavoriteProducts){
-        favoriteProductsRepository.deleteFavoriteProduct(favoriteProducts)
+    suspend operator fun invoke(favoriteProducts: FavoriteProducts) : Int{
+        return favoriteProductsRepository.deleteFavoriteProduct(favoriteProducts)
     }
 }

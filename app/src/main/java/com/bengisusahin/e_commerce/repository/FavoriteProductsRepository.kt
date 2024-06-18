@@ -9,13 +9,16 @@ import javax.inject.Inject
 class FavoriteProductsRepository @Inject constructor(
     private val favoriteProductDao: FavoriteProductDao
 ){
-    suspend fun insertFavoriteProduct(favoriteProducts: FavoriteProducts) {
-        favoriteProductDao.insertFavoriteProduct(favoriteProducts)
+    suspend fun insertFavoriteProduct(favoriteProducts: FavoriteProducts) : Long{
+        return favoriteProductDao.insertFavoriteProduct(favoriteProducts)
     }
-    suspend fun deleteFavoriteProduct(favoriteProducts: FavoriteProducts) {
-        favoriteProductDao.deleteFavoriteProduct(favoriteProducts)
+    suspend fun deleteFavoriteProduct(favoriteProducts: FavoriteProducts) : Int{
+        return favoriteProductDao.deleteFavoriteProduct(favoriteProducts)
     }
     fun getAllFavoriteProducts(userId: Long) : Flow<List<FavoriteProducts>> {
         return favoriteProductDao.getAllFavoriteProducts(userId)
+    }
+    suspend fun isFavorite(productId: Int) : Boolean{
+        return favoriteProductDao.isFavorite(productId) > 0
     }
 }

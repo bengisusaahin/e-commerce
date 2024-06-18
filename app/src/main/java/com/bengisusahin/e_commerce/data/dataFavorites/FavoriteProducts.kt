@@ -1,13 +1,14 @@
 package com.bengisusahin.e_commerce.data.dataFavorites
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
-
 // Room database entity for favorite products
-@Entity(tableName = "favorite_products")
+// uid and pid are used as a composite primary key to prevent duplicate entries
+@Entity(tableName = "favorite_products", indices = [Index(value = ["uid", "pid"], unique = true)])
 data class FavoriteProducts(
-    // Primary key for the favorite products
     @PrimaryKey(autoGenerate = true)
+    // Primary key for the favorite products
     val fid: Int,
     // user id from api for the favorite products of the user
     val uid: Long,
