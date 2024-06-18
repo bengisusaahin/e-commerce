@@ -1,6 +1,5 @@
 package com.bengisusahin.e_commerce.view
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -44,13 +43,6 @@ class FavoritesFragment : Fragment(){
 
         binding.rwFavorite.layoutManager = LinearLayoutManager(context)
         binding.rwFavorite.adapter = favoriteProductsAdapter
-
-        // Get userId from SharedPreferences
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-        val userId = sharedPref?.getLong("userId", 0L) ?: 0L
-
-        // Call getAllFavoriteProducts with userId
-        viewModel.getAllFavoriteProducts(userId)
 
         viewModel.favoriteProducts.observe(viewLifecycleOwner) { state ->
             // update the UI

@@ -13,4 +13,9 @@ class FavoriteProductUseCase@Inject constructor(
         val user = authRepository.getCurrentUser().first()
         return FavoriteProducts(0, user.id, product.id, product.title, product.price, product.images[0],product.description)
     }
+
+    // This function is used to get the current user id so it is not operator fun
+    suspend fun getCurrentUserId(): Long {
+        return authRepository.getCurrentUser().first().id
+    }
 }
