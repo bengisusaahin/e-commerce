@@ -44,4 +44,8 @@ class FavoriteProductsAdapter(
         this.favoriteProducts = newFavoriteProducts
         notifyDataSetChanged()
     }
+
+    fun getFavoriteProductAt(position: Int): FavoriteProducts {
+        return favoriteProducts[position]
+    }
 }

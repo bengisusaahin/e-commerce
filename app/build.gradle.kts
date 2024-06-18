@@ -95,5 +95,6 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation(libs.androidx.room.ktx)
-
+    // Swipe to delete library
+    implementation(libs.recyclerview.swipedecorator)
 }
