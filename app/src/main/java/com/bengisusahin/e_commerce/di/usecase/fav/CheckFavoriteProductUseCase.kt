@@ -1,4 +1,4 @@
-package com.bengisusahin.e_commerce.di.usecase
+package com.bengisusahin.e_commerce.di.usecase.fav
 
 import com.bengisusahin.e_commerce.repository.FavoriteProductsRepository
 import javax.inject.Inject

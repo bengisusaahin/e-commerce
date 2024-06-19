@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bengisusahin.e_commerce.data.dataFavorites.FavoriteProducts
-import com.bengisusahin.e_commerce.di.usecase.DeleteFavoriteProductUseCase
-import com.bengisusahin.e_commerce.di.usecase.FavoriteProductUseCase
-import com.bengisusahin.e_commerce.di.usecase.GetAllFavoriteProductsUseCase
+import com.bengisusahin.e_commerce.di.usecase.fav.DeleteFavoriteProductUseCase
+import com.bengisusahin.e_commerce.di.usecase.fav.FavoriteProductUseCase
+import com.bengisusahin.e_commerce.di.usecase.fav.GetAllFavoriteProductsUseCase
 import com.bengisusahin.e_commerce.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

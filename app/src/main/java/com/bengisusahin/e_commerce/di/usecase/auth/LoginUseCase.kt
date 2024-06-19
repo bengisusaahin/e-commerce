@@ -1,4 +1,4 @@
-package com.bengisusahin.e_commerce.di.usecase
+package com.bengisusahin.e_commerce.di.usecase.auth
 
 import com.bengisusahin.e_commerce.data.dataAuth.LoginRequest
 import com.bengisusahin.e_commerce.data.dataAuth.User

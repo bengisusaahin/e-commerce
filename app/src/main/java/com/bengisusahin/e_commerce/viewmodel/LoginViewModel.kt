@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bengisusahin.e_commerce.data.dataAuth.LoginRequest
 import com.bengisusahin.e_commerce.data.dataAuth.User
-import com.bengisusahin.e_commerce.di.usecase.LoginUseCase
+import com.bengisusahin.e_commerce.di.usecase.auth.LoginUseCase
 import com.bengisusahin.e_commerce.util.FieldValidation
 import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.util.FormState
