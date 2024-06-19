@@ -10,6 +10,7 @@ import com.bengisusahin.e_commerce.di.usecase.fav.DeleteFavoriteProductUseCase
 import com.bengisusahin.e_commerce.di.usecase.fav.FavoriteProductUseCase
 import com.bengisusahin.e_commerce.di.usecase.fav.GetAllFavoriteProductsUseCase
 import com.bengisusahin.e_commerce.di.usecase.GetAllProductsUseCase
+import com.bengisusahin.e_commerce.di.usecase.category.GetProductsByCategoryUseCase
 import com.bengisusahin.e_commerce.di.usecase.fav.InsertFavoriteProductUseCase
 import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.util.ScreenState
@@ -22,7 +23,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val favoriteProductUseCase: FavoriteProductUseCase,
     private val getAllProductsUseCase: GetAllProductsUseCase,
-    private val getAllFavoriteProductsUseCase: GetAllFavoriteProductsUseCase,
+    private val getProductsByCategoryUseCase: GetProductsByCategoryUseCase,
     private val insertFavoriteProductUseCase: InsertFavoriteProductUseCase,
     private val deleteFavoriteProductUseCase: DeleteFavoriteProductUseCase,
     private val checkFavoriteProductUseCase: CheckFavoriteProductUseCase
@@ -31,11 +32,7 @@ class HomeViewModel @Inject constructor(
     private val _products = MutableLiveData<ScreenState<List<Product>>>()
     val products : LiveData<ScreenState<List<Product>>> get() = _products
 
-    init {
-        getAllProducts()
-    }
-
-    private fun getAllProducts(){
+    fun getAllProducts(){
         viewModelScope.launch {
             getAllProductsUseCase().collectLatest { resource ->
                 when (resource) {
@@ -66,5 +63,20 @@ class HomeViewModel @Inject constructor(
 
     suspend fun isFavorite(productId: Int): Boolean {
         return checkFavoriteProductUseCase(productId)
+    }
+
+    fun getProductsByCategory(category: String){
+        viewModelScope.launch {
+            getProductsByCategoryUseCase(category).collectLatest { resource ->
+                when (resource) {
+                    is ResourceResponseState.Loading -> _products.postValue(ScreenState.Loading)
+                    is ResourceResponseState.Error -> _products.postValue(ScreenState.Error(resource.message ?: "Unknown error"))
+                    is ResourceResponseState.Success -> {
+                        val productList = resource.data?.products
+                        _products.postValue(ScreenState.Success(productList ?: listOf()))
+                    }
+                }
+            }
+        }
     }
 }

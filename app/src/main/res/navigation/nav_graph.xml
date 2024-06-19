@@ -61,5 +61,13 @@
         android:id="@+id/categoriesFragment"
         android:name="com.bengisusahin.e_commerce.view.CategoriesFragment"
         android:label="fragment_categories"
-        tools:layout="@layout/fragment_categories" />
+        tools:layout="@layout/fragment_categories" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_homeFragment"
+            app:destination="@id/homeFragment">
+            <argument
+                android:name="categoryName"
+                app:argType="string" />
+        </action>
+    </fragment>
 </navigation>

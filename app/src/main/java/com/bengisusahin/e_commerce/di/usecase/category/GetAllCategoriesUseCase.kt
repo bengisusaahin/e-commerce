@@ -1,4 +1,4 @@
-package com.bengisusahin.e_commerce.di.usecase
+package com.bengisusahin.e_commerce.di.usecase.category
 
 import com.bengisusahin.e_commerce.repository.ProductRepository
 import javax.inject.Inject

@@ -6,11 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bengisusahin.e_commerce.data.dataCategories.CategoriesItem
 import com.bengisusahin.e_commerce.databinding.CategoryRecyclerRowBinding
 
-class CategoriesAdapter(private var categories: List<CategoriesItem>) : RecyclerView.Adapter<CategoriesAdapter.CategoryRowHolder>() {
+class CategoriesAdapter(
+    private var categories: List<CategoriesItem>,
+    private val onCategoryClick: (String) -> Unit
+) : RecyclerView.Adapter<CategoriesAdapter.CategoryRowHolder>() {
 
     inner class CategoryRowHolder(val binding: CategoryRecyclerRowBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(category: CategoriesItem) {
             binding.categoryName.text = category.name
+            binding.categoryName.setOnClickListener {
+                onCategoryClick(category.name)
+            }
         }
     }
 

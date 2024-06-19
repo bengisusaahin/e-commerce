@@ -43,6 +43,16 @@ class ProductRepository @Inject constructor(
     }.flowOn(Dispatchers.IO)
         .catch { emit(ResourceResponseState.Error(it.message.toString())) }
 
+    fun getProductsByCategory(category: String): Flow<ResourceResponseState<Products>> = flow {
+        emit(ResourceResponseState.Loading())
+        val modifiedCategoryName = category.replace(" ", "-")
+        val products = productService.getProductsByCategoryFromApi(modifiedCategoryName)
+        emit(ResourceResponseState.Success(products))
+    }.flowOn(Dispatchers.IO)
+        .catch {
+            emit(ResourceResponseState.Error(it.message.toString()))
+    }
+
     fun searchProducts(query: String): Flow<ResourceResponseState<List<Product>>> = flow {
         emit(ResourceResponseState.Loading())
         try {

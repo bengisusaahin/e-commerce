@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bengisusahin.e_commerce.data.dataCategories.Categories
-import com.bengisusahin.e_commerce.di.usecase.GetAllCategoriesUseCase
+import com.bengisusahin.e_commerce.di.usecase.category.GetAllCategoriesUseCase
 import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel

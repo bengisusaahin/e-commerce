@@ -14,6 +14,8 @@ interface ProductService {
     suspend fun getSingleProductFromApi(@Path("id") id: Int): Product
     @GET("products/categories")
     suspend fun getAllCategoriesFromApi(): Categories
+    @GET("products/category/{category}")
+    suspend fun getProductsByCategoryFromApi(@Path("category") category: String): Products
     @GET("products/search")
     suspend fun searchProducts(@Query("q") query: String): Products
 

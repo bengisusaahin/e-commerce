@@ -23,7 +23,8 @@ import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), ProductAdapter.Listener {
-    private lateinit var binding : FragmentHomeBinding
+    private  var _binding : FragmentHomeBinding ? = null
+    private val binding get() = _binding!!
     private val viewModel: HomeViewModel by viewModels()
     private var productAdapter : ProductAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +36,7 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         (activity as? AppCompatActivity)?.supportActionBar?.show()
         return binding.root
     }
@@ -63,6 +64,14 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
                 }
             }
         }
+
+        // Get the category name from the arguments
+        val categoryName = arguments?.getString("categoryName")
+        if (categoryName != null) {
+            viewModel.getProductsByCategory(categoryName)
+        } else {
+            viewModel.getAllProducts()
+        }
     }
 
     override fun onItemClick(product: Product) {
@@ -76,4 +85,8 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
         findNavController().navigate(action)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
