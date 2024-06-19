@@ -3,6 +3,7 @@ package com.bengisusahin.e_commerce.repository
 import android.util.Log
 import com.bengisusahin.e_commerce.data.Product
 import com.bengisusahin.e_commerce.data.Products
+import com.bengisusahin.e_commerce.data.dataCategories.Categories
 import com.bengisusahin.e_commerce.service.ProductService
 import com.bengisusahin.e_commerce.util.ResourceResponseState
 import kotlinx.coroutines.Dispatchers
@@ -33,7 +34,14 @@ class ProductRepository @Inject constructor(
     }.flowOn(Dispatchers.IO)
         .catch {
             emit(ResourceResponseState.Error(it.message.toString()))
-    }
+        }
+
+    fun getAllCategories(): Flow<ResourceResponseState<Categories>> = flow {
+        emit(ResourceResponseState.Loading())
+        val categories = productService.getAllCategoriesFromApi()
+        emit(ResourceResponseState.Success(categories))
+    }.flowOn(Dispatchers.IO)
+        .catch { emit(ResourceResponseState.Error(it.message.toString())) }
 
     fun searchProducts(query: String): Flow<ResourceResponseState<List<Product>>> = flow {
         emit(ResourceResponseState.Loading())
