@@ -31,4 +31,5 @@
     <string name="progress_bar">Progress Bar</string>
     <string name="favorite_product_image">Favorite Product Image</string>
     <string name="favorite_icon">Favorite Icon</string>
+    <string name="search_product">Search Product</string>
 </resources>

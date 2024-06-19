@@ -58,9 +58,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun deleteFavoriteProduct(favoriteProducts: FavoriteProducts) {
+    fun deleteFavoriteProduct(product: Product) {
         viewModelScope.launch {
-            deleteFavoriteProductUseCase(favoriteProducts)
+            val favoriteProduct = favoriteProductUseCase(product)
+            deleteFavoriteProductUseCase(favoriteProduct)
         }
     }
 

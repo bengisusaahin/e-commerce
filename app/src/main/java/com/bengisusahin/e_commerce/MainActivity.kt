@@ -49,6 +49,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment -> {
                     navController.navigate(R.id.homeFragment)
                 }
+                R.id.searchFragment -> {
+                    navController.navigate(R.id.searchFragment)
+                }
                 R.id.favoritesFragment -> {
                     navController.navigate(R.id.favoritesFragment)
                 }

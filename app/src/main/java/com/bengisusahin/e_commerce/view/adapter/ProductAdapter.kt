@@ -1,5 +1,6 @@
 package com.bengisusahin.e_commerce.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -14,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.math.log
 
 class ProductAdapter(
     private val productList: List<Product>,
@@ -32,17 +34,21 @@ class ProductAdapter(
                 viewModel.viewModelScope.launch {
                     val isFavorite = viewModel.isFavorite(product.id)
                     checkBoxFavorite.isChecked = isFavorite
+                    Log.d("fav", "bind: $isFavorite")
                 }
 
                 checkBoxFavorite.setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked) {
+                        Log.d("setOnCheckedChangeListener", "bind: $isChecked")
                         // If the checkbox is now checked, set the favorite icon and add the product to favorites
                         checkBoxFavorite.setButtonDrawable(R.drawable.ic_like_filled)
                         viewModel.insertFavoriteProduct(product)
                     } else {
+                        Log.d("else", "bind: $isChecked")
+                        Log.d("productid", "bind: ${product.id}")
                         // If the checkbox is now unchecked, set the not favorite icon and remove the product from favorites
                         checkBoxFavorite.setButtonDrawable(R.drawable.ic_like)
-                        //viewModel.deleteFavoriteProduct(product)
+                        viewModel.deleteFavoriteProduct(product)
                     }
                 }
 
