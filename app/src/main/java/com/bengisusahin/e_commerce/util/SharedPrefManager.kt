@@ -20,4 +20,36 @@ class SharedPrefManager@Inject constructor(
     fun fetchAuthToken(): String? {
         return sharedPreferences.getString("KEY_AUTH_TOKEN", null)
     }
+
+    fun saveRememberMe(rememberMe: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("KEY_REMEMBER_ME", rememberMe)
+        editor.apply()
+
+        Log.d("SharedPrefManager", "saveRememberMe: $rememberMe")
+    }
+
+    fun fetchRememberMe(): Boolean {
+        return sharedPreferences.getBoolean("KEY_REMEMBER_ME", false)
+    }
+
+    fun saveUsername(username: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("KEY_USERNAME", username)
+        editor.apply()
+    }
+
+    fun fetchUsername(): String? {
+        return sharedPreferences.getString("KEY_USERNAME", "")
+    }
+
+    fun savePassword(password: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("KEY_PASSWORD", password)
+        editor.apply()
+    }
+
+    fun fetchPassword(): String? {
+        return sharedPreferences.getString("KEY_PASSWORD", "")
+    }
 }

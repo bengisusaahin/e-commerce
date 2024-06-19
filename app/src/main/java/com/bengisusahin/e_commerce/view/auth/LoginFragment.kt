@@ -17,14 +17,17 @@ import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.util.FieldValidation
 import com.bengisusahin.e_commerce.util.FormState
 import com.bengisusahin.e_commerce.util.ResourceResponseState
+import com.bengisusahin.e_commerce.util.SharedPrefManager
 import com.bengisusahin.e_commerce.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var composeView: ComposeView
     private val viewModel by viewModels<LoginViewModel>()
+    @Inject lateinit var sharedPrefManager: SharedPrefManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,11 +50,17 @@ class LoginFragment : Fragment() {
                     passwordError = FieldValidation.Success
                 )
             )
+            val rememberMe = sharedPrefManager.fetchRememberMe()
+            val username = if (rememberMe) sharedPrefManager.fetchUsername() else ""
+            val password = if (rememberMe) sharedPrefManager.fetchPassword() else ""
                 LoginScreen(
                     state = loginState,
                     formState = formState,
-                    onLoginClick = { username, password ->
-                        viewModel.login(username, password)
+                    username = username ?: "",
+                    password = password ?: "",
+                    rememberMe = rememberMe,
+                    onLoginClick = { username, password, rememberMe ->
+                        viewModel.login(username, password, rememberMe)
                     }
                 )
         }

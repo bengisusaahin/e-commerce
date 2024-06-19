@@ -8,6 +8,7 @@ import com.bengisusahin.e_commerce.di.usecase.LoginUseCase
 import com.bengisusahin.e_commerce.util.FieldValidation
 import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.util.FormState
+import com.bengisusahin.e_commerce.util.SharedPrefManager
 import com.bengisusahin.e_commerce.util.validateUsername
 import com.bengisusahin.e_commerce.util.validatePassword
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val sharedPrefManager: SharedPrefManager
 ) : ViewModel() {
     private val _loginState = MutableSharedFlow<ResourceResponseState<User>>()
     val loginState = _loginState.asSharedFlow()
@@ -27,7 +29,7 @@ class LoginViewModel @Inject constructor(
     private val _loginFormState = MutableSharedFlow<FormState>()
     val loginFormState = _loginFormState.asSharedFlow()
 
-    fun login(username: String, password: String) {
+    fun login(username: String, password: String, rememberMe: Boolean) {
         val usernameValidation = validateUsername(username)
         val passwordValidation = validatePassword(password)
 
@@ -38,7 +40,18 @@ class LoginViewModel @Inject constructor(
                 try {
                     loginUseCase(LoginRequest(username, password)).collect { response ->
                         _loginState.emit(response)
+                        if (response is ResourceResponseState.Success) {
+                            if (rememberMe) {
+                                sharedPrefManager.saveRememberMe(true)
+                                sharedPrefManager.saveUsername(username)
+                                sharedPrefManager.savePassword(password)
+                            } else {
+                                sharedPrefManager.saveRememberMe(false)
+                                sharedPrefManager.saveUsername("")
+                                sharedPrefManager.savePassword("")
+                            }
                         }
+                    }
                 } catch (e: HttpException) {
                     val errorMessage = when (e.code()) {
                         404 -> "No found user"
