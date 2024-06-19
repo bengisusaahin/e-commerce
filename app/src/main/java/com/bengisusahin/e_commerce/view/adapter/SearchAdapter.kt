@@ -1,5 +1,6 @@
 package com.bengisusahin.e_commerce.view.adapter
 
+import android.util.Log
 import com.bumptech.glide.Glide
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -40,6 +41,7 @@ class SearchAdapter(
     }
 
     fun updateData(newProducts: List<Product>) {
+        Log.d("SearchAdapter", "Updating data with ${newProducts.size} items")
         this.productList = newProducts
         notifyDataSetChanged()
     }
