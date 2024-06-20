@@ -24,9 +24,9 @@
             android:drawablePadding="8dp"
             android:ellipsize="end"
             android:ems="4"
-            android:singleLine="true"
             android:textSize="14sp"
             android:textStyle="bold"
+            android:textAlignment="center"
             app:drawableTopCompat="@drawable/ic_category"
             tools:text="Category Name" />
 

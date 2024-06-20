@@ -4,17 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bengisusahin.e_commerce.data.Product
-import com.bengisusahin.e_commerce.databinding.CartRecyclerRowBinding
+import com.bengisusahin.e_commerce.databinding.OrderRecyclerRowBinding
 import com.bumptech.glide.Glide
 
-class CartRecyclerAdapter(val productList : List<Product>)
-    : RecyclerView.Adapter<CartRecyclerAdapter.CartRowHolder>() {
-    class CartRowHolder(val binding : CartRecyclerRowBinding ) : RecyclerView.ViewHolder(binding.root) {
+class OrderRecyclerView(val productList : List<Product>)
+    : RecyclerView.Adapter<OrderRecyclerView.CartRowHolder>() {
+    class CartRowHolder(val binding : OrderRecyclerRowBinding ) : RecyclerView.ViewHolder(binding.root) {
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartRowHolder {
-        val binding = CartRecyclerRowBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = OrderRecyclerRowBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return CartRowHolder(binding)
     }
 

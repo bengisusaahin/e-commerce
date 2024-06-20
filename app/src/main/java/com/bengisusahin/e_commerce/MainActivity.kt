@@ -58,8 +58,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.favoritesFragment -> {
                     navController.navigate(R.id.favoritesFragment)
                 }
-                R.id.cartFragment -> {
-                    navController.navigate(R.id.cartFragment)
+                R.id.ordersFragment -> {
+                    navController.navigate(R.id.ordersFragment)
                 }
                 R.id.loginFragment -> {
                     navController.navigate(R.id.loginFragment)
