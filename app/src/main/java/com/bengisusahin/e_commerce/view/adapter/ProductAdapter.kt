@@ -11,11 +11,7 @@ import com.bengisusahin.e_commerce.data.Product
 import com.bengisusahin.e_commerce.databinding.ProductRecyclerRowBinding
 import com.bengisusahin.e_commerce.viewmodel.HomeViewModel
 import com.bumptech.glide.Glide
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.math.log
 
 class ProductAdapter(
     private val productList: List<Product>,
@@ -53,8 +49,7 @@ class ProductAdapter(
                 }
 
                 buttonAddToCart.setOnClickListener {
-                    Toast.makeText(it.context, "Added to cart: ${product.title}", Toast.LENGTH_LONG).show()
-                    listener.onItemClick(product)
+                    listener.addToCart(product)
                 }
 
                 root.setOnClickListener {
@@ -79,5 +74,6 @@ class ProductAdapter(
 
     interface Listener {
         fun onItemClick(product: Product)
+        fun addToCart(product: Product)
     }
 }
