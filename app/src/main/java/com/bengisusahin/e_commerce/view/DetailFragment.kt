@@ -60,7 +60,6 @@ class DetailFragment : Fragment() {
                     binding.detailProductPrice.text = product.price.toString()
                     binding.detailProductRating.rating = product.rating.toFloat()
                     binding.detailProgressBar.visibility = View.GONE
-                    // TODO: Update your ViewPager2 with product images
                     viewPagerSetup(product)
                 }
                 is ScreenState.Error -> {

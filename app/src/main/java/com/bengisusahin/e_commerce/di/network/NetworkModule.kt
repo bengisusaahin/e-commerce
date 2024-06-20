@@ -2,6 +2,7 @@ package com.bengisusahin.e_commerce.di.network
 
 import com.bengisusahin.e_commerce.service.AuthInterceptor
 import com.bengisusahin.e_commerce.service.AuthService
+import com.bengisusahin.e_commerce.service.CartService
 import com.bengisusahin.e_commerce.service.ProductService
 import com.bengisusahin.e_commerce.util.Constants
 import com.bengisusahin.e_commerce.util.SharedPrefManager
@@ -44,5 +45,11 @@ object NetworkModule {
     @Singleton
     fun provideProductService(retrofit: Retrofit): ProductService {
         return retrofit.create(ProductService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCartService(retrofit: Retrofit): CartService {
+        return retrofit.create(CartService::class.java)
     }
 }
