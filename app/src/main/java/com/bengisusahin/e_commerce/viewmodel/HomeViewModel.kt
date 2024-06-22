@@ -10,7 +10,6 @@ import com.bengisusahin.e_commerce.data.dataCart.Cart
 import com.bengisusahin.e_commerce.di.usecase.fav.CheckFavoriteProductUseCase
 import com.bengisusahin.e_commerce.di.usecase.fav.DeleteFavoriteProductUseCase
 import com.bengisusahin.e_commerce.di.usecase.fav.FavoriteProductUseCase
-import com.bengisusahin.e_commerce.di.usecase.fav.GetAllFavoriteProductsUseCase
 import com.bengisusahin.e_commerce.di.usecase.GetAllProductsUseCase
 import com.bengisusahin.e_commerce.di.usecase.cart.AddToCartUseCase
 import com.bengisusahin.e_commerce.di.usecase.category.GetProductsByCategoryUseCase

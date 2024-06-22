@@ -21,4 +21,13 @@ class ProfileRepository @Inject constructor(
         .catch {
             emit(ResourceResponseState.Error(it.message.toString()))
         }
+
+    fun updateProfile(userId: Long, profile: Profile) : Flow<ResourceResponseState<Profile>> = flow {
+        emit(ResourceResponseState.Loading())
+        val updatedProfile = profileService.updateUserProfile(userId, profile)
+        emit(ResourceResponseState.Success(updatedProfile))
+    }.flowOn(Dispatchers.IO)
+        .catch {
+            emit(ResourceResponseState.Error(it.message.toString()))
+    }
 }

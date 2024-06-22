@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.bengisusahin.e_commerce.data.dataProfile.Profile
 import com.bengisusahin.e_commerce.di.usecase.fav.FavoriteProductUseCase
 import com.bengisusahin.e_commerce.di.usecase.profile.GetProfileUseCase
+import com.bengisusahin.e_commerce.di.usecase.profile.UpdateProfileUseCase
 import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,11 +19,15 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
-    private val favoriteProductUseCase: FavoriteProductUseCase
+    private val favoriteProductUseCase: FavoriteProductUseCase,
+    private val updateProfileUseCase: UpdateProfileUseCase
 ) : ViewModel(){
 
     private val _profile = MutableLiveData<ScreenState<Profile>>()
     val profile : LiveData<ScreenState<Profile>> get() = _profile
+
+    private val _updateProfileState = MutableLiveData<ScreenState<Profile>>()
+    val updateProfileState : LiveData<ScreenState<Profile>> get() = _updateProfileState
     init {
         viewModelScope.launch {
             val userId = getCurrentUserId()
@@ -51,7 +56,28 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
-
+    fun updateProfile(profile: Profile){
+        viewModelScope.launch {
+            val userId = getCurrentUserId()
+            updateProfileUseCase.invoke(userId, profile).collectLatest { result ->
+                when(result){
+                    is ResourceResponseState.Error -> {
+                        Log.e("ProfileViewModel", "Error updating profile: ${result.message ?: "Unknown error"}")
+                        _updateProfileState.value = ScreenState.Error(result.message ?: "Unknown error")
+                    }
+                    is ResourceResponseState.Loading -> {
+                        Log.d("ProfileViewModel", "Updating profile...")
+                        _updateProfileState.value = ScreenState.Loading
+                    }
+                    is ResourceResponseState.Success -> {
+                        Log.d("ProfileViewModel", "Profile updated successfully")
+                        _updateProfileState.value = ScreenState.Success(result.data!!)
+                        Log.d("ProfileViewModel", "Updated profile: $profile")
+                    }
+                }
+            }
+        }
+    }
 
     private suspend fun getCurrentUserId(): Long {
         return favoriteProductUseCase.getCurrentUserId()
