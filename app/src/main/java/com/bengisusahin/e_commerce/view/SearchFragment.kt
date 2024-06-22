@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bengisusahin.e_commerce.data.Product
+import com.bengisusahin.e_commerce.data.dataProduct.Product
 import com.bengisusahin.e_commerce.databinding.FragmentSearchBinding
 import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.util.ScreenState

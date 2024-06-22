@@ -11,18 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bengisusahin.e_commerce.data.Product
+import com.bengisusahin.e_commerce.data.dataProduct.Product
 import com.bengisusahin.e_commerce.data.dataCart.AddToCartProduct
-import com.bengisusahin.e_commerce.data.dataFavorites.FavoriteProducts
 import com.bengisusahin.e_commerce.databinding.FragmentHomeBinding
 import com.bengisusahin.e_commerce.util.ScreenState
 import com.bengisusahin.e_commerce.view.adapter.ProductAdapter
 import com.bengisusahin.e_commerce.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), ProductAdapter.Listener {

@@ -3,11 +3,10 @@ package com.bengisusahin.e_commerce.view.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bengisusahin.e_commerce.R
-import com.bengisusahin.e_commerce.data.Product
+import com.bengisusahin.e_commerce.data.dataProduct.Product
 import com.bengisusahin.e_commerce.databinding.ProductRecyclerRowBinding
 import com.bengisusahin.e_commerce.viewmodel.HomeViewModel
 import com.bumptech.glide.Glide

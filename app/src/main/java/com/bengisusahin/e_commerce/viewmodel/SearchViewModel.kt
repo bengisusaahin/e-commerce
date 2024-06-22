@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bengisusahin.e_commerce.data.Product
+import com.bengisusahin.e_commerce.data.dataProduct.Product
 import com.bengisusahin.e_commerce.di.usecase.GetAllProductsUseCase
 import com.bengisusahin.e_commerce.di.usecase.SearchProductsUseCase
 import com.bengisusahin.e_commerce.util.ResourceResponseState

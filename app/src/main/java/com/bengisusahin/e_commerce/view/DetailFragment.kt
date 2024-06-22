@@ -7,8 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import com.bengisusahin.e_commerce.R
-import com.bengisusahin.e_commerce.data.Product
+import com.bengisusahin.e_commerce.data.dataProduct.Product
 import com.bengisusahin.e_commerce.databinding.FragmentDetailBinding
 import com.bengisusahin.e_commerce.util.ScreenState
 import com.bengisusahin.e_commerce.view.adapter.DetailImageViewPagerAdapter

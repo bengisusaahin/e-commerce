@@ -1,7 +1,7 @@
 package com.bengisusahin.e_commerce.service
 
-import com.bengisusahin.e_commerce.data.Product
-import com.bengisusahin.e_commerce.data.Products
+import com.bengisusahin.e_commerce.data.dataProduct.Product
+import com.bengisusahin.e_commerce.data.dataProduct.Products
 import com.bengisusahin.e_commerce.data.dataCategories.Categories
 import retrofit2.http.GET
 import retrofit2.http.Path

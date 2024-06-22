@@ -1,8 +1,8 @@
 package com.bengisusahin.e_commerce.repository
 
 import android.util.Log
-import com.bengisusahin.e_commerce.data.Product
-import com.bengisusahin.e_commerce.data.Products
+import com.bengisusahin.e_commerce.data.dataProduct.Product
+import com.bengisusahin.e_commerce.data.dataProduct.Products
 import com.bengisusahin.e_commerce.data.dataCategories.Categories
 import com.bengisusahin.e_commerce.service.ProductService
 import com.bengisusahin.e_commerce.util.ResourceResponseState

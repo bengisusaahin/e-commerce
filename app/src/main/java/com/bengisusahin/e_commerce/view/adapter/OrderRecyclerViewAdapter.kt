@@ -3,10 +3,8 @@ package com.bengisusahin.e_commerce.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bengisusahin.e_commerce.data.Product
 import com.bengisusahin.e_commerce.data.dataCart.Cart
 import com.bengisusahin.e_commerce.databinding.OrderRecyclerRowBinding
-import com.bumptech.glide.Glide
 
 class OrderRecyclerViewAdapter(private var cart : List<Cart>)
     : RecyclerView.Adapter<OrderRecyclerViewAdapter.CartRowHolder>() {

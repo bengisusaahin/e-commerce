@@ -1,4 +1,4 @@
-package com.bengisusahin.e_commerce.data
+package com.bengisusahin.e_commerce.data.dataProduct
 
 data class Meta(
     val barcode: String,
