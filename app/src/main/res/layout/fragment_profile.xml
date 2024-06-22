@@ -48,14 +48,14 @@
                     android:id="@+id/tvPersonalInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Personal Info"
+                    android:text="@string/personal_info"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <!-- Full Name -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilFullName"
+                    android:id="@+id/tilFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -66,10 +66,9 @@
                     android:hint="@string/first_name">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etFullName"
+                        android:id="@+id/etFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Olivia"
                         android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,7 +80,7 @@
                     android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tilFullName"
+                    app:layout_constraintTop_toBottomOf="@id/tilFirstName"
                     app:hintEnabled="true"
                     android:hint="@string/last_name">
 
@@ -89,7 +88,6 @@
                         android:id="@+id/etLastName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Wilson"
                         android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,7 +107,6 @@
                         android:id="@+id/etUserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="oliviaw"
                         android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,7 +126,6 @@
                         android:id="@+id/etGender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Female"
                         android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -149,7 +145,6 @@
                         android:id="@+id/etAge"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="22"
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -169,7 +164,6 @@
                         android:id="@+id/etPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="+91 607-295-6448"
                         android:inputType="phone" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -189,7 +183,6 @@
                         android:id="@+id/etBirthday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="2002-4-20"
                         android:inputType="date" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -209,7 +202,6 @@
                         android:id="@+id/etBloodGroup"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="B+"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -256,7 +248,6 @@
                         android:id="@+id/etAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="547 First Street"
                         android:inputType="textPostalAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -276,7 +267,6 @@
                         android:id="@+id/etCity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Fort Worth"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -296,7 +286,6 @@
                         android:id="@+id/etState"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Tennessee"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -316,7 +305,6 @@
                         android:id="@+id/etCountry"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="United States"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 

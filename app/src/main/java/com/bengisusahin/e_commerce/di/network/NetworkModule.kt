@@ -4,6 +4,7 @@ import com.bengisusahin.e_commerce.service.AuthInterceptor
 import com.bengisusahin.e_commerce.service.AuthService
 import com.bengisusahin.e_commerce.service.CartService
 import com.bengisusahin.e_commerce.service.ProductService
+import com.bengisusahin.e_commerce.service.ProfileService
 import com.bengisusahin.e_commerce.util.Constants
 import com.bengisusahin.e_commerce.util.SharedPrefManager
 import dagger.Module
@@ -51,5 +52,10 @@ object NetworkModule {
     @Singleton
     fun provideCartService(retrofit: Retrofit): CartService {
         return retrofit.create(CartService::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideProfileService(retrofit: Retrofit): ProfileService {
+        return retrofit.create(ProfileService::class.java)
     }
 }

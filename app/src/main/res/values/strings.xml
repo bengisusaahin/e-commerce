@@ -49,4 +49,5 @@
     <string name="state">State</string>
     <string name="country">Country</string>
     <string name="user_image">User Image</string>
+    <string name="personal_info">Personal Info</string>
 </resources>
