@@ -61,6 +61,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.ordersFragment -> {
                     navController.navigate(R.id.ordersFragment)
                 }
+                R.id.profileFragment -> {
+                    navController.navigate(R.id.profileFragment)
+                }
                 R.id.loginFragment -> {
                     navController.navigate(R.id.loginFragment)
                 }

@@ -24,6 +24,10 @@
         android:id="@+id/ordersFragment"
         android:icon="@drawable/ic_cart"
         android:title="@string/orders" />
+        <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/profile" />
     <item
         android:id="@+id/loginFragment"
         android:icon="@drawable/ic_logout"
