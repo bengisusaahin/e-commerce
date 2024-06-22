@@ -18,7 +18,7 @@ import com.bengisusahin.e_commerce.util.FieldValidation
 import com.bengisusahin.e_commerce.util.FormState
 import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.util.SharedPrefManager
-import com.bengisusahin.e_commerce.viewmodel.LoginViewModel
+import com.bengisusahin.e_commerce.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +26,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var composeView: ComposeView
-    private val viewModel by viewModels<LoginViewModel>()
+    private val viewModel by viewModels<AuthViewModel>()
     @Inject lateinit var sharedPrefManager: SharedPrefManager
 
     override fun onCreateView(
