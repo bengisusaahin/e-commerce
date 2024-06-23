@@ -58,6 +58,8 @@ dependencies {
     implementation(libs.firebase.analytics)
     // Add the dependency for the Firebase Authentication library
     implementation(libs.firebase.auth)
+    // Firebase Cloud Messaging for push notifications
+    implementation(libs.firebase.messaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

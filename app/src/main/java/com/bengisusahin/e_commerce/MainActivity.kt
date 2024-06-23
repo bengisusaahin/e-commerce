@@ -1,6 +1,8 @@
 package com.bengisusahin.e_commerce
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -28,6 +30,14 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Log.d("MainActivity", "Intent extras: ${intent.extras}")
+        if (intent.getBooleanExtra("navigateToHome", false)) {
+            Log.d("MainActivity", "navigateToHome extra is true, navigating to homeFragment")
+            Handler(Looper.getMainLooper()).post {
+                findNavController(R.id.fragmentContainerView).navigate(R.id.homeFragment)
+            }
+        }
 
         val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
