@@ -50,7 +50,7 @@ class OrdersFragment : Fragment() {
 
     private fun setupRecyclerView() {
         Log.d("OrdersFragment", "setupRecyclerView called")
-        adapter = OrderRecyclerViewAdapter(listOf())
+        adapter = OrderRecyclerViewAdapter(listOf(), this)
         binding.rvCartProducts.layoutManager = LinearLayoutManager(requireContext())
         binding.rvCartProducts.adapter = adapter
     }

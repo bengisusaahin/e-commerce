@@ -30,7 +30,7 @@
             android:maxHeight="200dp"
             android:minWidth="150dp"
             android:minHeight="150dp"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             app:shapeAppearanceOverlay="@style/roundedImageView" />
 
         <CheckBox

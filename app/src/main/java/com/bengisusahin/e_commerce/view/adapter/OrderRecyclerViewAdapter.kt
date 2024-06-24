@@ -2,18 +2,26 @@ package com.bengisusahin.e_commerce.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bengisusahin.e_commerce.data.dataCart.Cart
 import com.bengisusahin.e_commerce.databinding.OrderRecyclerRowBinding
+import com.bengisusahin.e_commerce.view.OrdersFragmentDirections
 
-class OrderRecyclerViewAdapter(private var cart : List<Cart>)
+class OrderRecyclerViewAdapter(private var cart : List<Cart>, private val fragment : Fragment)
     : RecyclerView.Adapter<OrderRecyclerViewAdapter.CartRowHolder>() {
 
         inner class CartRowHolder(val binding : OrderRecyclerRowBinding ) : RecyclerView.ViewHolder(binding.root) {
             fun bind(cart: Cart){
-                binding.cartId.text = "Cart ID: ${cart.id}"
-                binding.cartTotal.text = "Total: ${cart.total}"
-                binding.cartTotalProducts.text = "Total Quantity: ${cart.totalQuantity}"
+                binding.tvCartId.text = "Cart ID: ${cart.id}"
+                binding.tvCartTotal.text = "Total: ${cart.total}"
+                binding.tvCartTotalProducts.text = "Total Quantity: ${cart.totalQuantity}"
+                val productAdapter = OrderProductAdapter(cart.products) { product ->
+                    val action = OrdersFragmentDirections.actionOrdersFragmentToDetailFragment(product.id)
+                    fragment.findNavController().navigate(action)
+                }
+                binding.rvCartProducts.adapter = productAdapter
             }
         }
 

@@ -29,7 +29,11 @@
         android:id="@+id/ordersFragment"
         android:name="com.bengisusahin.e_commerce.view.OrdersFragment"
         android:label="fragment_orders"
-        tools:layout="@layout/fragment_orders" />
+        tools:layout="@layout/fragment_orders" >
+        <action
+            android:id="@+id/action_ordersFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.bengisusahin.e_commerce.view.FavoritesFragment"

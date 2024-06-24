@@ -16,19 +16,19 @@
 
         <TextView
             android:id="@+id/favProductTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:lines="1"
-            android:singleLine="true"
-            android:ems="4"
             android:ellipsize="end"
-            tools:text="Item Name"
+            android:maxLines="2"
+            tools:text="Product Title"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/ivFavProduct"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/favProductPrice"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            tools:text="Item Price"
+            tools:text="Product Price"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/ivFavProduct"
             app:layout_constraintTop_toBottomOf="@+id/favProductTitle" />
