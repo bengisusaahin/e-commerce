@@ -68,7 +68,8 @@ class HomeViewModel @Inject constructor(
     }
 
     suspend fun isFavorite(productId: Int): Boolean {
-        return checkFavoriteProductUseCase(productId)
+        val userId = favoriteProductUseCase.getCurrentUserId()
+        return checkFavoriteProductUseCase(userId, productId)
     }
 
     fun getProductsByCategory(category: String){

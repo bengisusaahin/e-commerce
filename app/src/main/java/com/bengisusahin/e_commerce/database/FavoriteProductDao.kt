@@ -21,6 +21,6 @@ interface FavoriteProductDao {
     @Delete
     suspend fun deleteFavoriteProduct(favoriteProducts: FavoriteProducts) : Int
 
-    @Query("SELECT count(*) FROM favorite_products WHERE pid = :productId")
-    suspend fun isFavorite(productId: Int) : Int
+    @Query("SELECT count(*) FROM favorite_products WHERE uid = :userId AND pid = :productId")
+    suspend fun isFavorite(userId: Long, productId: Int) : Int
 }

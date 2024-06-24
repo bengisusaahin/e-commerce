@@ -18,7 +18,7 @@ class FavoriteProductsRepository @Inject constructor(
     fun getAllFavoriteProducts(userId: Long) : Flow<List<FavoriteProducts>> {
         return favoriteProductDao.getAllFavoriteProducts(userId)
     }
-    suspend fun isFavorite(productId: Int) : Boolean{
-        return favoriteProductDao.isFavorite(productId) > 0
+    suspend fun isFavorite(userId: Long, productId: Int) : Boolean{
+        return favoriteProductDao.isFavorite(userId, productId) > 0
     }
 }
