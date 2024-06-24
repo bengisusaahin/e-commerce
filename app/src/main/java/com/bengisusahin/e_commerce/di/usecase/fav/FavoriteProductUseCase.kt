@@ -3,11 +3,13 @@ package com.bengisusahin.e_commerce.di.usecase.fav
 import com.bengisusahin.e_commerce.data.dataProduct.Product
 import com.bengisusahin.e_commerce.data.dataFavorites.FavoriteProducts
 import com.bengisusahin.e_commerce.repository.AuthRepository
+import com.bengisusahin.e_commerce.repository.FavoriteProductsRepository
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class FavoriteProductUseCase@Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val favoriteProductsRepository: FavoriteProductsRepository
 ){
     suspend operator fun invoke(product: Product): FavoriteProducts {
         val user = authRepository.getCurrentUser().first()
@@ -17,5 +19,9 @@ class FavoriteProductUseCase@Inject constructor(
     // This function is used to get the current user id so it is not operator fun
     suspend fun getCurrentUserId(): Long {
         return authRepository.getCurrentUser().first().id
+    }
+
+    suspend fun getFid(userId: Long, productId: Int): Int? {
+        return favoriteProductsRepository.getFid(userId, productId)
     }
 }

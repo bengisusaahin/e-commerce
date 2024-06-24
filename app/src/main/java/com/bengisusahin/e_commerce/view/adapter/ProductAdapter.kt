@@ -3,6 +3,7 @@ package com.bengisusahin.e_commerce.view.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bengisusahin.e_commerce.R
@@ -28,22 +29,29 @@ class ProductAdapter(
                 // Check if the product is in favorites
                 viewModel.viewModelScope.launch {
                     val isFavorite = viewModel.isFavorite(product.id)
+                    Log.d("isFavorite", "Is product favorite: $isFavorite")
                     checkBoxFavorite.isChecked = isFavorite
                     Log.d("fav", "bind: $isFavorite")
                 }
 
                 checkBoxFavorite.setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked) {
-                        Log.d("setOnCheckedChangeListener", "bind: $isChecked")
                         // If the checkbox is now checked, set the favorite icon and add the product to favorites
                         checkBoxFavorite.setButtonDrawable(R.drawable.ic_like_filled)
                         viewModel.insertFavoriteProduct(product)
+                        Toast.makeText(itemView.context, "Product successfully added to favorites", Toast.LENGTH_SHORT).show()
                     } else {
-                        Log.d("else", "bind: $isChecked")
-                        Log.d("productid", "bind: ${product.id}")
                         // If the checkbox is now unchecked, set the not favorite icon and remove the product from favorites
                         checkBoxFavorite.setButtonDrawable(R.drawable.ic_like)
-                        viewModel.deleteFavoriteProduct(product)
+                        viewModel.viewModelScope.launch {
+                            val deleteResult = viewModel.deleteFavoriteProduct(product)
+                            if (deleteResult == 0) {
+                                Log.d("deleteFavoriteProduct", "Failed to delete product from favorites")
+                            } else {
+                                Toast.makeText(itemView.context, "Product successfully deleted from favorites", Toast.LENGTH_SHORT).show()
+                                Log.d("deleteFavoriteProduct", "Product successfully deleted from favorites")
+                            }
+                        }
                     }
                 }
 

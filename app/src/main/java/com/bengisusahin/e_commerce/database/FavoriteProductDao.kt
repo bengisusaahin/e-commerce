@@ -23,4 +23,7 @@ interface FavoriteProductDao {
 
     @Query("SELECT count(*) FROM favorite_products WHERE uid = :userId AND pid = :productId")
     suspend fun isFavorite(userId: Long, productId: Int) : Int
+
+    @Query("SELECT fid FROM favorite_products WHERE uid = :userId AND pid = :productId")
+    suspend fun getFid(userId: Long, productId: Int): Int?
 }

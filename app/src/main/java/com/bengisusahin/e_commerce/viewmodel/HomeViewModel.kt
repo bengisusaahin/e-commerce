@@ -1,5 +1,6 @@
 package com.bengisusahin.e_commerce.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.bengisusahin.e_commerce.data.dataProduct.Product
 import com.bengisusahin.e_commerce.data.dataCart.AddToCartProduct
 import com.bengisusahin.e_commerce.data.dataCart.Cart
+import com.bengisusahin.e_commerce.data.dataFavorites.FavoriteProducts
 import com.bengisusahin.e_commerce.di.usecase.fav.CheckFavoriteProductUseCase
 import com.bengisusahin.e_commerce.di.usecase.fav.DeleteFavoriteProductUseCase
 import com.bengisusahin.e_commerce.di.usecase.fav.FavoriteProductUseCase
@@ -60,10 +62,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun deleteFavoriteProduct(product: Product) {
-        viewModelScope.launch {
-            val favoriteProduct = favoriteProductUseCase(product)
-            deleteFavoriteProductUseCase(favoriteProduct)
+    suspend fun deleteFavoriteProduct(product: Product): Int {
+        val userId = favoriteProductUseCase.getCurrentUserId()
+        val fid = favoriteProductUseCase.getFid(userId, product.id)
+        if (fid != null) {
+            val favoriteProduct = FavoriteProducts(fid, userId, product.id, product.title, product.price, product.images[0],product.description)
+            Log.d("deleteFavoriteProduct", "FavoriteProduct: $favoriteProduct")
+            val deleteResult = deleteFavoriteProductUseCase(favoriteProduct)
+            Log.d("deleteFavoriteProduct", "Delete result: $deleteResult")
+            return deleteResult
+        } else {
+            Log.d("deleteFavoriteProduct", "Fid is null")
+            return -1
         }
     }
 
