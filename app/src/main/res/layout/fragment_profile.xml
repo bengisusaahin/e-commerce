@@ -317,6 +317,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_update_profile"
             android:backgroundTint="@color/white"
+            android:scaleX="2"
+            android:scaleY="2"
             app:layout_constraintEnd_toEndOf="@+id/cardView"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/cvUserImage"

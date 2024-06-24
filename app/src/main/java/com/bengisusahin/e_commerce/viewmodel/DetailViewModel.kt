@@ -4,8 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bengisusahin.e_commerce.data.dataCart.AddToCartProduct
+import com.bengisusahin.e_commerce.data.dataCart.Cart
 import com.bengisusahin.e_commerce.data.dataProduct.Product
 import com.bengisusahin.e_commerce.di.usecase.GetSingleProductUseCase
+import com.bengisusahin.e_commerce.di.usecase.cart.AddToCartUseCase
+import com.bengisusahin.e_commerce.di.usecase.fav.FavoriteProductUseCase
 import com.bengisusahin.e_commerce.util.ResourceResponseState
 import com.bengisusahin.e_commerce.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,10 +19,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val getSingleProductUseCase: GetSingleProductUseCase
+    private val getSingleProductUseCase: GetSingleProductUseCase,
+    private val addToCartUseCase: AddToCartUseCase,
+    private val favoriteProductUseCase: FavoriteProductUseCase
 ): ViewModel(){
     private val _product = MutableLiveData<ScreenState<Product>>()
     val product: LiveData<ScreenState<Product>> get() = _product
+
     fun getProduct(id: Int){
         viewModelScope.launch {
             getSingleProductUseCase.invoke(id).collectLatest {

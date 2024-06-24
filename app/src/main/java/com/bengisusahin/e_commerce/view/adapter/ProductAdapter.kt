@@ -39,7 +39,6 @@ class ProductAdapter(
                         // If the checkbox is now checked, set the favorite icon and add the product to favorites
                         checkBoxFavorite.setButtonDrawable(R.drawable.ic_like_filled)
                         viewModel.insertFavoriteProduct(product)
-                        Toast.makeText(itemView.context, "Product successfully added to favorites", Toast.LENGTH_SHORT).show()
                     } else {
                         // If the checkbox is now unchecked, set the not favorite icon and remove the product from favorites
                         checkBoxFavorite.setButtonDrawable(R.drawable.ic_like)
@@ -48,7 +47,6 @@ class ProductAdapter(
                             if (deleteResult == 0) {
                                 Log.d("deleteFavoriteProduct", "Failed to delete product from favorites")
                             } else {
-                                Toast.makeText(itemView.context, "Product successfully deleted from favorites", Toast.LENGTH_SHORT).show()
                                 Log.d("deleteFavoriteProduct", "Product successfully deleted from favorites")
                             }
                         }
