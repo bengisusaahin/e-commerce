@@ -102,6 +102,7 @@ class SearchFragment : Fragment(), SearchAdapter.Listener {
                 return true
             }
         })
+        binding.searchView.isIconifiedByDefault = false
 
         homeViewModel.addToCartState.observe(viewLifecycleOwner) { state ->
             when (state) {

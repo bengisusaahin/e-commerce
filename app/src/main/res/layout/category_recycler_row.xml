@@ -23,7 +23,7 @@
             android:layout_margin="8dp"
             android:drawablePadding="8dp"
             android:ellipsize="end"
-            android:ems="4"
+            android:maxLines="2"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textAlignment="center"
