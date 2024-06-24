@@ -60,6 +60,8 @@ dependencies {
     implementation(libs.firebase.auth)
     // Firebase Cloud Messaging for push notifications
     implementation(libs.firebase.messaging)
+    // Remote config
+    implementation(libs.firebase.config)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

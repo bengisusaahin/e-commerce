@@ -1,5 +1,6 @@
 package com.bengisusahin.e_commerce
 
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,12 +10,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.bengisusahin.e_commerce.databinding.ActivityMainBinding
+import com.bengisusahin.e_commerce.util.RemoteConfigUtil
 import com.bengisusahin.e_commerce.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -22,14 +25,25 @@ import kotlin.math.log
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    @Inject
+    lateinit var remoteConfigUtil: RemoteConfigUtil
     private val authViewModel : AuthViewModel by viewModels()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Renk bilgisi ile arka plan rengini güncelle
+        remoteConfigUtil.colorLiveData.observe(this) { color ->
+            // Arka plan rengini güncelle
+            Log.d("MainActivity", "Fetch successful, color: $color") // Fetch başarılı ve renk değerini logla
+            binding.navigationView.setBackgroundColor(Color.parseColor(color))
+            Log.d("MainActivity", "Background color set to $color on view ${binding.drawerLayout} and ${binding.navigationView}") // Arka plan rengini ayarlama işlemi sonrası log
+        }
 
         Log.d("MainActivity", "Intent extras: ${intent.extras}")
         if (intent.getBooleanExtra("navigateToHome", false)) {
