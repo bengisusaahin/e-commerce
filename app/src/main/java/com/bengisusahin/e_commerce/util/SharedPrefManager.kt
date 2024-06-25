@@ -53,4 +53,14 @@ class SharedPrefManager@Inject constructor(
     fun fetchPassword(): String? {
         return sharedPreferences.getString("KEY_PASSWORD", "")
     }
+
+    fun saveUserImage(userImage: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("KEY_USER_IMAGE", userImage)
+        editor.apply()
+    }
+
+    fun fetchUserImage(): String? {
+        return sharedPreferences.getString("KEY_USER_IMAGE", "")
+    }
 }

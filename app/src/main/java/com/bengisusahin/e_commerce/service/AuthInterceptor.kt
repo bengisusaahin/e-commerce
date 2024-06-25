@@ -4,6 +4,7 @@ import com.bengisusahin.e_commerce.util.SharedPrefManager
 import okhttp3.Interceptor
 import okhttp3.Response
 
+// Interceptor to add the Authorization header to the request
 class AuthInterceptor(private val sharedPrefManager: SharedPrefManager) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()

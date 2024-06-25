@@ -74,6 +74,8 @@ class LoginFragment : Fragment() {
                             .show()
                     }
                     is ResourceResponseState.Success -> {
+                        sharedPrefManager.saveUsername(it.data!!.username)
+                        sharedPrefManager.saveUserImage(it.data.image)
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     }
                     is ResourceResponseState.Error -> {

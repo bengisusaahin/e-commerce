@@ -5,23 +5,28 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentContainerView
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.bengisusahin.e_commerce.databinding.ActivityMainBinding
+import com.bengisusahin.e_commerce.databinding.DrawerHeaderBinding
 import com.bengisusahin.e_commerce.util.RemoteConfigUtil
+import com.bengisusahin.e_commerce.util.ScreenState
+import com.bengisusahin.e_commerce.util.SharedPrefManager
 import com.bengisusahin.e_commerce.viewmodel.AuthViewModel
+import com.bengisusahin.e_commerce.viewmodel.ProfileViewModel
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlin.math.log
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -30,11 +35,14 @@ class MainActivity : AppCompatActivity() {
     private val authViewModel : AuthViewModel by viewModels()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var drawerHeaderBinding: DrawerHeaderBinding
+    @Inject lateinit var sharedPrefManager: SharedPrefManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
+        drawerHeaderBinding = DrawerHeaderBinding.bind(binding.navigationView.getHeaderView(0))
         setContentView(binding.root)
 
         // Update the background color of the drawer layout observed from remote config
@@ -59,6 +67,30 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         val drawerLayout = binding.drawerLayout
         val navView = binding.navigationView
+
+        drawerLayout.addDrawerListener(object: DrawerLayout.DrawerListener {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                Log.d("MainActivity", "onDrawerSlide: $slideOffset")
+            }
+            override fun onDrawerOpened(drawerView: View) {
+                sharedPrefManager.fetchUsername()?.let {
+                    drawerHeaderBinding.textView.text = it
+                }
+                sharedPrefManager.fetchUserImage()?.let {
+                    Glide.with(this@MainActivity)
+                        .load(it)
+                        .into(drawerHeaderBinding.imageView)
+                }
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                Log.d("MainActivity", "onDrawerClosed")
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+                Log.d("MainActivity", "onDrawerStateChanged: $newState")
+            }
+        })
         // Set up the ActionBarDrawerToggle
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
