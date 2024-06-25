@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -47,6 +48,36 @@ class CategoriesFragment : Fragment() {
         categoriesRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         categoriesRecyclerView.adapter = categoriesAdapter
 
+        observeCategoriesState()
+
+        // Handle search
+        binding.searchViewCategories.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!query.isNullOrEmpty()) {
+                    viewModel.searchCategory(query)
+                }else{
+                    // If the search query is empty, reload the original categories
+                    observeCategoriesState()
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (!newText.isNullOrEmpty()) {
+                    viewModel.searchCategory(newText)
+                } else {
+                    // If the search query is empty, reload the original categories
+                    observeCategoriesState()
+                }
+                return true
+            }
+        })
+        binding.searchViewCategories.isIconifiedByDefault = false
+
+        observeSearchState()
+    }
+
+    private fun observeCategoriesState() {
         viewModel.categories.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ScreenState.Loading -> {
@@ -64,6 +95,23 @@ class CategoriesFragment : Fragment() {
         }
     }
 
+    private fun observeSearchState() {
+        viewModel.searchState.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is ScreenState.Loading -> {
+                    // Show loading indicator
+                }
+                is ScreenState.Success -> {
+                    response.uiData?.let { searchResults ->
+                        categoriesAdapter.updateCategories(searchResults)
+                    }
+                }
+                is ScreenState.Error -> {
+                    // Show error message
+                }
+            }
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
