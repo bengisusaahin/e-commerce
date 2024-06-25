@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -90,17 +91,20 @@ class FavoritesFragment : Fragment(){
             // update the UI
             when (state) {
                 is ScreenState.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
                 }
 
                 is ScreenState.Success -> {
                     state.uiData?.let { products ->
+                        binding.progressBar.visibility = View.GONE
                         Log.d("FavoritesFragment", "onViewCreated: $products")
                         favoriteProductsAdapter.updateFavoriteProducts(products)
                     }
                 }
 
                 is ScreenState.Error -> {
-                    // show an error message
+                    Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
+                    binding.progressBar.visibility = View.GONE
                 }
             }
         }

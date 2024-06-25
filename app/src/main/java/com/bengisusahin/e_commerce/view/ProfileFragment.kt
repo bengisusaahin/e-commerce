@@ -55,14 +55,16 @@ class ProfileFragment : Fragment() {
                 is ScreenState.Success -> {
                     Log.d("ProfileFragment", "Success state in profile LiveData")
                     displayProfile(state.uiData)
+                    binding.progressBar.visibility = View.GONE
                 }
                 is ScreenState.Error -> {
                     Log.d("ProfileFragment", "Error state in profile LiveData: ${state.message}")
-                    // handle error
+                    Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
+                    binding.progressBar.visibility = View.GONE
                 }
                 is ScreenState.Loading -> {
                     Log.d("ProfileFragment", "Loading state in profile LiveData")
-                    // show loading
+                    binding.progressBar.visibility = View.VISIBLE
                 }
             }
         }
@@ -75,15 +77,16 @@ class ProfileFragment : Fragment() {
                     Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
                     // Optionally, fetch profile again after update
                     displayProfile(state.uiData)
+                    binding.progressBar.visibility = View.GONE
                 }
                 is ScreenState.Error -> {
                     // Handle error state after update
                     Log.e("ProfileFragment", "Error updating profile: ${state.message}")
                     Toast.makeText(requireContext(), "Error updating profile", Toast.LENGTH_SHORT).show()
-                    // Show an error message to the user
+                    binding.progressBar.visibility = View.GONE
                 }
                 is ScreenState.Loading -> {
-                    // Show loading state while updating
+                    binding.progressBar.visibility = View.VISIBLE
                 }
             }
         }

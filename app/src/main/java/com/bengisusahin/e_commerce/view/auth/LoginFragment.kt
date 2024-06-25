@@ -1,6 +1,7 @@
 package com.bengisusahin.e_commerce.view.auth
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,6 +54,7 @@ class LoginFragment : Fragment() {
             val rememberMe = sharedPrefManager.fetchRememberMe()
             val username = if (rememberMe) sharedPrefManager.fetchUsername() else ""
             val password = if (rememberMe) sharedPrefManager.fetchPassword() else ""
+
                 LoginScreen(
                     state = loginState,
                     formState = formState,

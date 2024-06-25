@@ -37,12 +37,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Renk bilgisi ile arka plan rengini güncelle
+        // Update the background color of the drawer layout observed from remote config
         remoteConfigUtil.colorLiveData.observe(this) { color ->
-            // Arka plan rengini güncelle
-            Log.d("MainActivity", "Fetch successful, color: $color") // Fetch başarılı ve renk değerini logla
+            Log.d("MainActivity", "Fetch successful, color: $color")
             binding.navigationView.setBackgroundColor(Color.parseColor(color))
-            Log.d("MainActivity", "Background color set to $color on view ${binding.drawerLayout} and ${binding.navigationView}") // Arka plan rengini ayarlama işlemi sonrası log
+            Log.d("MainActivity", "Background color set to $color on view ${binding.drawerLayout} and ${binding.navigationView}")
         }
 
         Log.d("MainActivity", "Intent extras: ${intent.extras}")
@@ -58,7 +57,6 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
-        //val navController = findNavController(R.id.fragmentContainerView)
         val drawerLayout = binding.drawerLayout
         val navView = binding.navigationView
         // Set up the ActionBarDrawerToggle
@@ -102,6 +100,7 @@ class MainActivity : AppCompatActivity() {
                         .setPositiveButton("Yes") { _, _ ->
                             authViewModel.logout()
                             Log.d("MainActivity", "Navigating to loginFragment")
+                            // Before navigating to loginFragment, pop the back stack
                             navController.popBackStack()
                             navController.navigate(R.id.loginFragment)
                         }

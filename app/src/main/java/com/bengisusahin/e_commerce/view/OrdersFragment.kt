@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,19 +61,19 @@ class OrdersFragment : Fragment() {
             when (state) {
                 is ScreenState.Loading -> {
                     // Show loading indicator
-                    //binding.progressBar.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.VISIBLE
                 }
                 is ScreenState.Success -> {
                     // Hide loading indicator and update the RecyclerView
-                    //binding.progressBar.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
                     state.uiData?.let { newCart ->
                         adapter.updateCart(newCart.carts)
                     }
                 }
                 is ScreenState.Error -> {
                     // Hide loading indicator and show error message
-                    //binding.progressBar.visibility = View.GONE
-                    //binding.errorMessage.visibility = View.VISIBLE
+                    Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
+                    binding.progressBar.visibility = View.GONE
                 }
             }
         }

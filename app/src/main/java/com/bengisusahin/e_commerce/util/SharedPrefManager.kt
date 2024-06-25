@@ -6,7 +6,8 @@ import android.util.Log
 import javax.inject.Inject
 
 class SharedPrefManager@Inject constructor(
-    context: Context) {
+    context: Context
+) {
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences("sharedPrefsFile", Context.MODE_PRIVATE)
 
     fun saveAuthToken(token: String) {

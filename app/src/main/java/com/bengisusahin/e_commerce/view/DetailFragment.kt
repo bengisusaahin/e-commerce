@@ -56,12 +56,13 @@ class DetailFragment : Fragment() {
             when (screenState) {
                 is ScreenState.Loading -> {
                     // Show loading indicator
-                    binding.detailProgressBar.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.VISIBLE
                 }
                 is ScreenState.Success -> {
                     // Update UI with product details
                     val product = screenState.uiData
                     updateProductDetails(product)
+                    binding.progressBar.visibility = View.GONE
 
                     // Check if the product is in favorites
                     checkIfProductIsFavorite(product)
@@ -75,7 +76,7 @@ class DetailFragment : Fragment() {
                 is ScreenState.Error -> {
                     // Show error message
                     Toast.makeText(context, screenState.message, Toast.LENGTH_SHORT).show()
-                    binding.detailProgressBar.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
                 }
             }
         }
@@ -89,7 +90,7 @@ class DetailFragment : Fragment() {
             detailProductDescription.text = product.description
             detailProductPrice.text = product.price.toString()
             detailProductRating.rating = product.rating.toFloat()
-            detailProgressBar.visibility = View.GONE
+            progressBar.visibility = View.GONE
             viewPagerSetup(product)
         }
     }
@@ -129,17 +130,17 @@ class DetailFragment : Fragment() {
             when (state) {
                 is ScreenState.Loading -> {
                     // Show loading indicator
-                    binding.detailProgressBar.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.VISIBLE
                 }
                 is ScreenState.Error -> {
                     // Show error message
                     Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
-                    binding.detailProgressBar.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
                 }
                 is ScreenState.Success -> {
                     // Show success message
                     Toast.makeText(context, "Product added to cart", Toast.LENGTH_SHORT).show()
-                    binding.detailProgressBar.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
                 }
             }
         }

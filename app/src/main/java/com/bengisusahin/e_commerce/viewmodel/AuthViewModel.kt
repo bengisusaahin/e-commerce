@@ -32,13 +32,6 @@ class AuthViewModel @Inject constructor(
     private val _loginFormState = MutableSharedFlow<FormState>()
     val loginFormState = _loginFormState.asSharedFlow()
 
-    private val _isLoggedIn = MutableLiveData<Boolean>()
-    val isLoggedIn : LiveData<Boolean> get() = _isLoggedIn
-
-    init {
-        _isLoggedIn.value = sharedPrefManager.fetchRememberMe()
-    }
-
     fun login(username: String, password: String, rememberMe: Boolean) {
         val usernameValidation = validateUsername(username)
         val passwordValidation = validatePassword(password)
@@ -51,7 +44,6 @@ class AuthViewModel @Inject constructor(
                     loginUseCase(LoginRequest(username, password)).collect { response ->
                         _loginState.emit(response)
                         if (response is ResourceResponseState.Success) {
-                            _isLoggedIn.value = true
                             if (rememberMe) {
                                 sharedPrefManager.saveRememberMe(true)
                                 sharedPrefManager.saveUsername(username)
@@ -65,9 +57,10 @@ class AuthViewModel @Inject constructor(
                     }
                 } catch (e: HttpException) {
                     val errorMessage = when (e.code()) {
-                        404 -> "No found user"
-                        401,403 -> "Wrong password or username"
-                        else -> "An error occurred"
+                        404 -> "No user found with that username."
+                        401 -> "Invalid username or password."
+                        403 -> "Your account may be locked or disabled."
+                        else -> "An error occurred. Please try again later."
                     }
                     _loginState.emit(ResourceResponseState.Error(errorMessage))
                 } catch (e: Exception) {
@@ -83,7 +76,6 @@ class AuthViewModel @Inject constructor(
     }
 
     fun logout() {
-        _isLoggedIn.value = false
         viewModelScope.launch {
             val username = sharedPrefManager.fetchUsername()
             val password = sharedPrefManager.fetchPassword()

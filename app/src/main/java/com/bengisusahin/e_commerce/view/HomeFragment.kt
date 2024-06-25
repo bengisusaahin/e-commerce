@@ -47,18 +47,20 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
         viewModel.products.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is ScreenState.Loading -> {
-                    // Show loading indicator
+                    binding.progressBar.visibility = View.VISIBLE
                 }
 
                 is ScreenState.Success -> {
                     // Update RecyclerView with product list
+                    binding.progressBar.visibility = View.GONE
                     resource.uiData?.let { products ->
                         binding.recyclerviewHome.adapter = ProductAdapter(products, this, viewModel)
                     }
                 }
 
                 is ScreenState.Error -> {
-                    // Show error message
+                    Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
+                    binding.progressBar.visibility = View.GONE
                 }
             }
         }

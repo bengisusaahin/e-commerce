@@ -51,16 +51,18 @@ class SearchFragment : Fragment(), SearchAdapter.Listener {
         viewModel.products.observe(viewLifecycleOwner) { screenState ->
             when (screenState) {
                 is ScreenState.Loading -> {
-                    // TODO: Show loading state
+                    binding.progressBar.visibility = View.VISIBLE
                 }
                 is ScreenState.Error -> {
-                    // TODO: Show error state
+                    Toast.makeText(context, screenState.message, Toast.LENGTH_SHORT).show()
+                    binding.progressBar.visibility = View.GONE
                 }
                 is ScreenState.Success -> {
                     // Update the adapter with the new product list
                     screenState.uiData?.let { products ->
                         searchAdapter.updateData(products)
                     }
+                    binding.progressBar.visibility = View.GONE
                 }
             }
         }
@@ -70,15 +72,17 @@ class SearchFragment : Fragment(), SearchAdapter.Listener {
             viewModel.searchState.collect { resourceResponseState ->
                 when (resourceResponseState) {
                     is ResourceResponseState.Loading -> {
-                        // TODO: Show loading state
+                        binding.progressBar.visibility = View.VISIBLE
                     }
                     is ResourceResponseState.Error -> {
-                        // TODO: Show error state
+                        Toast.makeText(context, resourceResponseState.message, Toast.LENGTH_SHORT).show()
+                        binding.progressBar.visibility = View.GONE
                     }
                     is ResourceResponseState.Success -> {
                         // Update the adapter with the new product list
                         Log.d("search", "onViewCreated: ${resourceResponseState.data}")
                         resourceResponseState.data?.let { searchAdapter.updateData(it) }
+                        binding.progressBar.visibility = View.GONE
                     }
                 }
             }
