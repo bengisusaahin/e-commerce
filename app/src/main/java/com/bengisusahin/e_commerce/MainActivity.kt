@@ -95,13 +95,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.profileFragment -> {
                     navController.navigate(R.id.profileFragment)
                 }
-                R.id.loginFragment -> {
+                R.id.logout -> {
                     AlertDialog.Builder(this)
                         .setTitle("Logout")
                         .setMessage("Are you sure you want to logout?")
                         .setPositiveButton("Yes") { _, _ ->
                             authViewModel.logout()
                             Log.d("MainActivity", "Navigating to loginFragment")
+                            navController.popBackStack()
                             navController.navigate(R.id.loginFragment)
                         }
                         .setNegativeButton("No", null)
@@ -109,25 +110,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             true
-        }
-        // TODO
-        // Observe the isLoggedIn LiveData
-        authViewModel.isLoggedIn.observe(this) { isLoggedIn ->
-            if (isLoggedIn) {
-                Log.d("MainActivity", "onCreate: $isLoggedIn")
-                // User logged in, show the home screen
-                Log.d("MainActivity", "User logged in, navigating to homeFragment")
-                navController.navigate(R.id.homeFragment)
-                // Remove loginFragment from the back stack
-                navController.popBackStack(R.id.loginFragment, true)
-            } else {
-                Log.d("MainActivitylogout", "onCreate: $isLoggedIn")
-                // User logged out, show the login screen
-                Log.d("MainActivity", "User logged out, popping back stack")
-                navController.popBackStack(R.id.loginFragment, true)
-                Log.d("MainActivity", "Navigating to loginFragment")
-                navController.navigate(R.id.loginFragment)
-            }
         }
     }
 

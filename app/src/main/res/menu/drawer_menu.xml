@@ -29,7 +29,7 @@
         android:icon="@drawable/ic_profile"
         android:title="@string/profile" />
     <item
-        android:id="@+id/loginFragment"
+        android:id="@+id/logout"
         android:icon="@drawable/ic_logout"
         android:title= "@string/logout" />
     </group>
