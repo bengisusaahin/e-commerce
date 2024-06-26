@@ -7,6 +7,7 @@ import com.bengisusahin.e_commerce.util.ResourceResponseState
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+// This class is a use case class for login operation
 class LoginUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ){

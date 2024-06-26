@@ -8,6 +8,7 @@ import androidx.room.Query
 import com.bengisusahin.e_commerce.data.dataFavorites.FavoriteProducts
 import kotlinx.coroutines.flow.Flow
 
+// Data access object for the favorite products
 @Dao
 interface FavoriteProductDao {
     // return type for the show warning to user

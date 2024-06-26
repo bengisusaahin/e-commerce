@@ -16,6 +16,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+// Hilt module to provide network dependencies such as Retrofit and OkHttpClient
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {

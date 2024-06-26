@@ -1,8 +1,6 @@
 package com.bengisusahin.e_commerce.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bengisusahin.e_commerce.data.dataAuth.LoginRequest
@@ -21,17 +19,21 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
 
+// ViewModel class for authentication operations
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val sharedPrefManager: SharedPrefManager
 ) : ViewModel() {
+    // SharedFlow to emit login state
     private val _loginState = MutableSharedFlow<ResourceResponseState<User>>()
     val loginState = _loginState.asSharedFlow()
 
+    // SharedFlow to emit login form state
     private val _loginFormState = MutableSharedFlow<FormState>()
     val loginFormState = _loginFormState.asSharedFlow()
 
+    // Function to login user with given username and password
     fun login(username: String, password: String, rememberMe: Boolean) {
         val usernameValidation = validateUsername(username)
         val passwordValidation = validatePassword(password)
@@ -45,6 +47,7 @@ class AuthViewModel @Inject constructor(
                         _loginState.emit(response)
                         if (response is ResourceResponseState.Success) {
                             if (rememberMe) {
+                                // Save username and password if remember me is checked
                                 sharedPrefManager.saveRememberMe(true)
                                 sharedPrefManager.saveUsername(username)
                                 sharedPrefManager.savePassword(password)
@@ -75,6 +78,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    // Function to logout user and clear saved username and password from shared preferences
     fun logout() {
         viewModelScope.launch {
             val username = sharedPrefManager.fetchUsername()

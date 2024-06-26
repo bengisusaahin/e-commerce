@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
+// This class is a use case class for searching products
 class SearchProductsUseCase @Inject constructor(
     private val repository: ProductRepository
 ) {

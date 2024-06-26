@@ -8,6 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
+// CartService interface defines the methods for adding a product to the cart and getting the cart by user ID
 interface CartService {
     // Service returns a Cart object when adding a product to the cart
     @POST("carts/add")

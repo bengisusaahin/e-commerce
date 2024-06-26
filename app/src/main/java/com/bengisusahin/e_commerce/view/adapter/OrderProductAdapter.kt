@@ -7,6 +7,7 @@ import com.bengisusahin.e_commerce.data.dataCart.Product
 import com.bengisusahin.e_commerce.databinding.FavoriteRecyclerRowBinding
 import com.bumptech.glide.Glide
 
+// Adapter for the products in the orders recycler view
 class OrderProductAdapter(
     private var products: List<Product>,
     private val onProductClick: ((Product) -> Unit)?
@@ -17,6 +18,7 @@ class OrderProductAdapter(
             binding.favProductPrice.text = product.price.toString()
             Glide.with(binding.root).load(product.thumbnail).into(binding.ivFavProduct)
         }
+        // When a product is clicked, navigate to the product detail page
         init {
             binding.root.setOnClickListener {
                 val position = adapterPosition
@@ -38,14 +40,5 @@ class OrderProductAdapter(
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.bindItem(products[position])
-    }
-
-    fun updateProducts(newProducts: List<Product>) {
-        this.products = newProducts
-        notifyDataSetChanged()
-    }
-
-    fun getProductAt(position: Int): Product {
-        return products[position]
     }
 }

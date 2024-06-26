@@ -23,6 +23,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// HilViewModel annotation is used to inject dependencies to the ViewModel class
+// Inject annotation is used to inject dependencies to the ViewModel class
+// ViewModel class is used to manage UI-related data in a lifecycle-conscious way
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val favoriteProductUseCase: FavoriteProductUseCase,
@@ -34,12 +37,15 @@ class HomeViewModel @Inject constructor(
     private val addToCartUseCase: AddToCartUseCase
 ): ViewModel(){
 
+    // MutableLiveData is a data holder class that can be observed within a given lifecycle
     private val _products = MutableLiveData<ScreenState<List<Product>>>()
     val products : LiveData<ScreenState<List<Product>>> get() = _products
 
+    // add to cart state to observe the state of the cart
     private val _addToCartState = MutableLiveData<ScreenState<Cart>>()
     val addToCartState : LiveData<ScreenState<Cart>> get() = _addToCartState
 
+    // getAllProducts function is used to get all products from the server
     fun getAllProducts(){
         viewModelScope.launch {
             getAllProductsUseCase().collectLatest { resource ->
@@ -55,6 +61,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    // insertFavoriteProduct function is used to insert a product to the favorite list
     fun insertFavoriteProduct(product: Product) {
         viewModelScope.launch {
             val favoriteProduct = favoriteProductUseCase(product)
@@ -62,6 +69,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    // deleteFavoriteProduct function is used to delete a product from the favorite list
     suspend fun deleteFavoriteProduct(product: Product): Int {
         val userId = favoriteProductUseCase.getCurrentUserId()
         val fid = favoriteProductUseCase.getFid(userId, product.id)
@@ -77,11 +85,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    // isFavorite function is used to check if a product is in the favorite list
     suspend fun isFavorite(productId: Int): Boolean {
         val userId = favoriteProductUseCase.getCurrentUserId()
         return checkFavoriteProductUseCase(userId, productId)
     }
 
+    // getProductsByCategory function is used to get products by category
     fun getProductsByCategory(category: String){
         viewModelScope.launch {
             getProductsByCategoryUseCase(category).collectLatest { resource ->
@@ -96,6 +106,7 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+    // addToCart function is used to add products to the cart
     fun addToCart(products: List<AddToCartProduct>) {
         viewModelScope.launch {
             val userId = favoriteProductUseCase.getCurrentUserId()

@@ -14,11 +14,13 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// This class is a ViewModel class for the orders fragment
 @HiltViewModel
 class OrdersViewModel @Inject constructor(
     private val getCartByUserIdUseCase: GetCartByUserIdUseCase,
     private val favoriteProductUseCase: FavoriteProductUseCase
 ) : ViewModel() {
+    // LiveData to hold the cart data
     private val _cart = MutableLiveData<ScreenState<Carts>>()
     val cart : LiveData<ScreenState<Carts>> get() = _cart
 
@@ -29,6 +31,7 @@ class OrdersViewModel @Inject constructor(
         }
     }
 
+    // This function gets the cart data by the user id
     private fun getCartByUserId(userId: Long){
         viewModelScope.launch {
             getCartByUserIdUseCase.invoke(userId).collectLatest {
@@ -41,6 +44,7 @@ class OrdersViewModel @Inject constructor(
         }
     }
 
+    // This function gets the current user id
     private suspend fun getCurrentUserId(): Long {
         return favoriteProductUseCase.getCurrentUserId()
     }

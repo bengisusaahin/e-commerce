@@ -13,6 +13,7 @@ import com.bengisusahin.e_commerce.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
+// FirebaseMessagingService class to handle Firebase Cloud Messaging
 class MyFirebaseMessagingService : FirebaseMessagingService(){
 
     override fun onNewToken(token: String) {
@@ -32,6 +33,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
         }
     }
 
+    // Function to create a notification with the given message body and navigate to HomeFragment
     private fun createNotification(messageBody: String) {
         Log.d("MyFirebaseMessagingService", "createNotification started")
         val channelId = "ecommerce_notifications_id"

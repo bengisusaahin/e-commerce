@@ -4,7 +4,6 @@ import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +14,7 @@ import com.bengisusahin.e_commerce.viewmodel.HomeViewModel
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 
+// Adapter for the products recycler view
 class ProductAdapter(
     private val productList: List<Product>,
     private val listener: Listener,
@@ -36,6 +36,7 @@ class ProductAdapter(
                     Log.d("fav", "bind: $isFavorite")
                 }
 
+                // Set the checkbox listener to add or remove the product from favorites
                 checkBoxFavorite.setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked) {
                         // If the checkbox is now checked, set the favorite icon and add the product to favorites

@@ -9,6 +9,7 @@ import com.bengisusahin.e_commerce.data.dataCart.Cart
 import com.bengisusahin.e_commerce.databinding.OrderRecyclerRowBinding
 import com.bengisusahin.e_commerce.view.OrdersFragmentDirections
 
+// Adapter for the recycler view in the OrdersFragment
 class OrderRecyclerViewAdapter(private var cart : List<Cart>, private val fragment : Fragment)
     : RecyclerView.Adapter<OrderRecyclerViewAdapter.CartRowHolder>() {
 

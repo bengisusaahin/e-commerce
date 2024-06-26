@@ -22,15 +22,12 @@ import com.bengisusahin.e_commerce.view.adapter.ProductAdapter
 import com.bengisusahin.e_commerce.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+// Fragment for displaying products in the home screen
 @AndroidEntryPoint
 class HomeFragment : Fragment(), ProductAdapter.Listener {
     private  var _binding : FragmentHomeBinding ? = null
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by viewModels()
-    private var productAdapter : ProductAdapter? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,16 +35,19 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        // Show the action bar when the fragment is visible
         (activity as? AppCompatActivity)?.supportActionBar?.show()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Set the toolbar title
         val toolbarTitle = (activity as? MainActivity)?.findViewById<TextView>(R.id.toolbar_title)
         toolbarTitle?.text = getString(R.string.title_home)
         binding.recyclerviewHome.layoutManager = GridLayoutManager(requireContext(),2)
 
+        // Observe the products LiveData and update the UI accordingly when the data changes
         viewModel.products.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is ScreenState.Loading -> {
@@ -95,8 +95,6 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
     }
 
     override fun onItemClick(product: Product) {
-        // add product to cart
-        //viewModel.addToCart(product)
         navigateToProductDetail(product.id)
     }
 
@@ -105,11 +103,13 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
         findNavController().navigate(action)
     }
 
+    // Add the product to the cart when the user clicks the add to cart button
     override fun addToCart(product: Product) {
         Log.d("HomeFragment", "Adding product to cart: ${product.id}, ${product.title}")
         viewModel.addToCart(listOf(AddToCartProduct(product.id, 1))) // assuming quantity is 1
     }
 
+    // Clean up the binding object when the fragment is destroyed
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

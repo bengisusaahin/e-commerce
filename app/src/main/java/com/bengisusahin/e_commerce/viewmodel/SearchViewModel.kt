@@ -16,21 +16,26 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// This class is a ViewModel class for the search feature of the application
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val getAllProductsUseCase: GetAllProductsUseCase,
     private val searchProductsUseCase: SearchProductsUseCase
 ): ViewModel(){
 
+    // This variable is a MutableLiveData object which holds the state of the products
     private val _products = MutableLiveData<ScreenState<List<Product>>>()
     val products : LiveData<ScreenState<List<Product>>> get() = _products
 
+    // This variable is a MutableStateFlow object which holds the state of the search
     private val _searchState = MutableStateFlow<ResourceResponseState<List<Product>>>(ResourceResponseState.Loading())
     val searchState: StateFlow<ResourceResponseState<List<Product>>> = _searchState
 
     init {
         getAllProducts()
     }
+
+    // This function is used to get all products
     private fun getAllProducts(){
         viewModelScope.launch {
             getAllProductsUseCase().collectLatest { resource ->
@@ -45,6 +50,7 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
+    // This function is used to search products by query
     fun searchProducts(query: String) {
         viewModelScope.launch {
             searchProductsUseCase(query).collect { resource ->

@@ -7,10 +7,13 @@ import com.bengisusahin.e_commerce.data.dataFavorites.FavoriteProducts
 import com.bengisusahin.e_commerce.databinding.FavoriteRecyclerRowBinding
 import com.bumptech.glide.Glide
 
+// Adapter class for favorite products recycler view
 class FavoriteProductsAdapter(
     private var favoriteProducts: List<FavoriteProducts>,
     private val onFavoriteProductClick: ((FavoriteProducts) -> Unit)?
 ) : RecyclerView.Adapter<FavoriteProductsAdapter.FavoriteProductsViewHolder>(){
+
+    // ViewHolder class for favorite products recycler view
     inner class FavoriteProductsViewHolder(val binding: FavoriteRecyclerRowBinding ) : RecyclerView.ViewHolder(binding.root){
         fun bindItem(favoriteProducts: FavoriteProducts){
             binding.favProductTitle.text = favoriteProducts.title
@@ -45,6 +48,7 @@ class FavoriteProductsAdapter(
         notifyDataSetChanged()
     }
 
+    // Get favorite product at a given position
     fun getFavoriteProductAt(position: Int): FavoriteProducts {
         return favoriteProducts[position]
     }

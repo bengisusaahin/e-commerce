@@ -15,21 +15,26 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// This class is a ViewModel class that is used to manage the data in the CategoriesFragment
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
     private val getCategoriesUseCase: GetAllCategoriesUseCase,
     private val searchCategoryUseCase: SearchCategoryUseCase
 ) : ViewModel() {
+    // This LiveData is used to observe the categories from the API
     private val _categories = MutableLiveData<ScreenState<Categories>>()
     val categories: LiveData<ScreenState<Categories>> get() = _categories
 
+    // This LiveData is used to observe the search result from the API
     private val _searchState = MutableLiveData<ScreenState<List<CategoriesItem>>>()
     val searchState: LiveData<ScreenState<List<CategoriesItem>>> get() = _searchState
 
+    // This method is used to get all categories from the API
     init {
         getAllCategories()
     }
 
+    // This method is used to get all categories from the API
     private fun getAllCategories() {
         viewModelScope.launch {
             getCategoriesUseCase().collectLatest {
@@ -42,6 +47,7 @@ class CategoriesViewModel @Inject constructor(
         }
     }
 
+    // This method is used to search for a category in the API
     fun searchCategory(query: String) {
         viewModelScope.launch {
             searchCategoryUseCase(query).collectLatest {

@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
+// This interface is used to define the API calls for the user profile
 interface ProfileService {
     @GET("users/{id}")
     suspend fun getUserProfile(@Path("id") id: Long): Profile

@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
+// Repository class for the products in the app that communicates with the ProductService
 class ProductRepository @Inject constructor(
     private val productService: ProductService
 ){

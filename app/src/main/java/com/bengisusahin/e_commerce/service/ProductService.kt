@@ -7,6 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+// This interface is used to define the API calls for the product service
 interface ProductService {
     @GET("products")
     suspend fun getProductsListFromApi(): Products

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,13 +15,14 @@ import com.bengisusahin.e_commerce.MainActivity
 import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.databinding.FragmentCategoriesBinding
 import com.bengisusahin.e_commerce.util.ScreenState
+import com.bengisusahin.e_commerce.view.adapter.CategoriesAdapter
 import com.bengisusahin.e_commerce.viewmodel.CategoriesViewModel
 import com.bengisusahin.e_commerce.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+// Fragment for displaying the categories of products
 @AndroidEntryPoint
 class CategoriesFragment : Fragment() {
-
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CategoriesViewModel by viewModels()
@@ -57,7 +57,7 @@ class CategoriesFragment : Fragment() {
 
         observeCategoriesState()
 
-        // Handle search
+        // Handle search functionality for categories using the SearchView
         binding.searchViewCategories.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
@@ -84,6 +84,7 @@ class CategoriesFragment : Fragment() {
         observeSearchState()
     }
 
+    // Observe the categories state and update the UI accordingly
     private fun observeCategoriesState() {
         viewModel.categories.observe(viewLifecycleOwner) { response ->
             when (response) {
@@ -104,6 +105,7 @@ class CategoriesFragment : Fragment() {
         }
     }
 
+    // Observe the search state and update the UI accordingly
     private fun observeSearchState() {
         viewModel.searchState.observe(viewLifecycleOwner) { response ->
             when (response) {

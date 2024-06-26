@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bengisusahin.e_commerce.databinding.DetailImageProductBinding
 import com.bumptech.glide.Glide
 
+// Adapter for the viewpager in the detail fragment
 class DetailImageViewPagerAdapter(private val imageUrlList: List<String>) :
     RecyclerView.Adapter<DetailImageViewPagerAdapter.ViewPagerViewHolder>() {
 

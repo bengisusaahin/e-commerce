@@ -24,16 +24,13 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+// Fragment for displaying product details and adding the product to cart or favorites
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding ? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<DetailViewModel>()
     private val homeViewModel by viewModels<HomeViewModel>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -88,6 +85,7 @@ class DetailFragment : Fragment() {
         observeAddToCart()
     }
 
+    // Update UI with product details
     private fun updateProductDetails(product: Product) {
         binding.apply {
             detailProductTitle.text = product.title
@@ -99,6 +97,7 @@ class DetailFragment : Fragment() {
         }
     }
 
+    // Check if the product is in favorites and update the favorite checkbox state accordingly when the fragment is created
     private fun checkIfProductIsFavorite(product: Product) {
         homeViewModel.viewModelScope.launch {
             val isFavorite = homeViewModel.isFavorite(product.id)
@@ -108,6 +107,7 @@ class DetailFragment : Fragment() {
         }
     }
 
+    // Handle the favorite checkbox state changes and add/remove the product from favorites
     private fun handleFavoriteCheckbox(product: Product) {
         binding.checkBoxFavorite.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -131,6 +131,7 @@ class DetailFragment : Fragment() {
         }
     }
 
+    // Observe the addToCart LiveData
     private fun observeAddToCart() {
         homeViewModel.addToCartState.observe(viewLifecycleOwner) { state ->
             when (state) {
@@ -152,6 +153,7 @@ class DetailFragment : Fragment() {
         }
     }
 
+    // Set up the ViewPager for displaying product images
     private fun viewPagerSetup(product: Product) {
         binding.viewPagerProductImages.adapter = DetailImageViewPagerAdapter(product.images)
         TabLayoutMediator(binding.tabLayoutIndicator, binding.viewPagerProductImages) { _, _ -> }.attach()

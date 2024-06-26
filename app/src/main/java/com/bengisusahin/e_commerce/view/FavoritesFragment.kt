@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -27,6 +26,7 @@ import com.bengisusahin.e_commerce.viewmodel.FavoriteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
+// FavoritesFragment class is created to display the favorite products of the user.
 @AndroidEntryPoint
 class FavoritesFragment : Fragment(){
 
@@ -59,6 +59,7 @@ class FavoritesFragment : Fragment(){
         binding.rwFavorite.layoutManager = LinearLayoutManager(context)
         binding.rwFavorite.adapter = favoriteProductsAdapter
 
+        // Swipe to delete functionality for favorite products
         val swipeHandler = object :  RecyclerViewSwipe() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
@@ -66,6 +67,7 @@ class FavoritesFragment : Fragment(){
                 viewModel.deleteFavoriteProduct(favoriteProduct)
             }
 
+            // Draw the delete icon and background color for the swipe action
             override fun onChildDraw(
                 c: Canvas,
                 recyclerView: RecyclerView,
@@ -92,21 +94,23 @@ class FavoritesFragment : Fragment(){
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(binding.rwFavorite)
 
+        // Observe the favorite products and update the UI accordingly
         viewModel.favoriteProducts.observe(viewLifecycleOwner) { state ->
-            // update the UI
             when (state) {
                 is ScreenState.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
                 }
-
                 is ScreenState.Success -> {
                     state.uiData?.let { products ->
                         binding.progressBar.visibility = View.GONE
-                        Log.d("FavoritesFragment", "onViewCreated: $products")
-                        favoriteProductsAdapter.updateFavoriteProducts(products)
+                        if (products.isEmpty()) {
+                            Toast.makeText( context,"No Favorites Yet",Toast.LENGTH_LONG).show()
+                        } else {
+                            Log.d("FavoritesFragment", "onViewCreated: $products")
+                            favoriteProductsAdapter.updateFavoriteProducts(products)
+                        }
                     }
                 }
-
                 is ScreenState.Error -> {
                     Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
                     binding.progressBar.visibility = View.GONE
@@ -115,6 +119,7 @@ class FavoritesFragment : Fragment(){
         }
     }
 
+    // Navigate to the product detail fragment when a favorite product is clicked
     private fun navigateToProductDetail(favoriteProduct: FavoriteProducts) {
         val action = FavoritesFragmentDirections.actionFavoritesFragmentToDetailFragment(favoriteProduct.pid)
         findNavController().navigate(action)

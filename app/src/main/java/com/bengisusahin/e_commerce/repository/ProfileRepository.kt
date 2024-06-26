@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
+// Repository class for the profile service that handles the profile data
 class ProfileRepository @Inject constructor(
     private val profileService: ProfileService
 ){

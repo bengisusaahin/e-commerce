@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// This class is a ViewModel class for the profile screen
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
@@ -23,9 +24,11 @@ class ProfileViewModel @Inject constructor(
     private val updateProfileUseCase: UpdateProfileUseCase
 ) : ViewModel(){
 
+    // MutableLiveData object for the profile screen state
     private val _profile = MutableLiveData<ScreenState<Profile>>()
     val profile : LiveData<ScreenState<Profile>> get() = _profile
 
+    // MutableLiveData object for the update profile screen state
     private val _updateProfileState = MutableLiveData<ScreenState<Profile>>()
     val updateProfileState : LiveData<ScreenState<Profile>> get() = _updateProfileState
     init {
@@ -35,6 +38,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    // Function to fetch the profile of the current user
     private fun getProfile(userId: Long){
         viewModelScope.launch {
             Log.d("ProfileViewModel", "Fetching profile for user id: $userId")
@@ -56,6 +60,7 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
+    // Function to update the profile of the current user
     fun updateProfile(profile: Profile){
         viewModelScope.launch {
             val userId = getCurrentUserId()
@@ -78,7 +83,7 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
-
+    // Function to get the current user id
     private suspend fun getCurrentUserId(): Long {
         return favoriteProductUseCase.getCurrentUserId()
     }

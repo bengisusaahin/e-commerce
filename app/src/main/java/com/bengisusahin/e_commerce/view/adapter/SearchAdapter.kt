@@ -14,6 +14,7 @@ import com.bengisusahin.e_commerce.databinding.ProductRecyclerRowBinding
 import com.bengisusahin.e_commerce.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
 
+// Adapter for the search results RecyclerView in the search fragment
 class SearchAdapter(
     private var productList: List<Product>,
     private val listener: Listener,

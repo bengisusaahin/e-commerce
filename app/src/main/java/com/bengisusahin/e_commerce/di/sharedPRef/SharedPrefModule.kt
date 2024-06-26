@@ -8,7 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-// Hilt module to provide the application context
+// Hilt module to provide the application context as a singleton object
 @Module
 @InstallIn(SingletonComponent::class)
 object SharedPrefModule {

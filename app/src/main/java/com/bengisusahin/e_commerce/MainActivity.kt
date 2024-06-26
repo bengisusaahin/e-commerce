@@ -21,14 +21,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.bengisusahin.e_commerce.databinding.ActivityMainBinding
 import com.bengisusahin.e_commerce.databinding.DrawerHeaderBinding
 import com.bengisusahin.e_commerce.util.RemoteConfigUtil
-import com.bengisusahin.e_commerce.util.ScreenState
 import com.bengisusahin.e_commerce.util.SharedPrefManager
 import com.bengisusahin.e_commerce.viewmodel.AuthViewModel
-import com.bengisusahin.e_commerce.viewmodel.ProfileViewModel
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+// MainActivity class is annotated with @AndroidEntryPoint to generate the Hilt components
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     @Inject
@@ -53,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("MainActivity", "Background color set to $color on view ${binding.drawerLayout} and ${binding.navigationView}")
         }
 
+        // firebase messaging intent extras
         Log.d("MainActivity", "Intent extras: ${intent.extras}")
         if (intent.getBooleanExtra("navigateToHome", false)) {
             Log.d("MainActivity", "navigateToHome extra is true, navigating to homeFragment")
@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout = binding.drawerLayout
         val navView = binding.navigationView
 
+        // Set up the drawer layout listener to update the header when the drawer is opened
         drawerLayout.addDrawerListener(object: DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                // Log.d("MainActivity", "onDrawerSlide: $slideOffset")
@@ -109,6 +110,7 @@ class MainActivity : AppCompatActivity() {
             binding.toolbarTitle.text = destination.label
         }
 
+        // Set up the navigation menu listener to navigate to the selected fragment
         navView.setNavigationItemSelectedListener { menuItem ->
             menuItem.isChecked = true
             drawerLayout.closeDrawers()

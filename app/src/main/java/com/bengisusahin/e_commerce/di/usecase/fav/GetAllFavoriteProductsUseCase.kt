@@ -5,6 +5,7 @@ import com.bengisusahin.e_commerce.repository.FavoriteProductsRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+// This use case is used to get all favorite products of a user
 class GetAllFavoriteProductsUseCase @Inject constructor(
     private val favoriteProductsRepository: FavoriteProductsRepository
 ){

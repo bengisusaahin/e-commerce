@@ -10,22 +10,23 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import javax.inject.Inject
 import javax.inject.Singleton
 
+// RemoteConfigUtil class to manage remote config operations
 @Singleton
 class RemoteConfigUtil @Inject constructor() {
     private val remoteConfig: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
     val colorLiveData = MutableLiveData<String>()
 
     init {
-        // Varsayılan değerleri ayarla
+        // Set default values
         remoteConfig.setDefaultsAsync(mapOf("backgroundColor" to "#FFFFFF"))
 
-        // Remote Config ayarlarını yapılandır
+        // Set minimum fetch interval
         val configSettings = FirebaseRemoteConfigSettings.Builder()
-            .setMinimumFetchIntervalInSeconds(3600) // Prod'da minimum fetch interval
+            .setMinimumFetchIntervalInSeconds(3600)
             .build()
         remoteConfig.setConfigSettingsAsync(configSettings)
 
-        // Config güncellemelerini dinle
+        // Add listener to update the colorLiveData when remote config is updated
         remoteConfig.addOnConfigUpdateListener(object : ConfigUpdateListener {
             override fun onUpdate(configUpdate: ConfigUpdate) {
                 Log.e("onUpdate", "Updated keys: " + configUpdate.updatedKeys)
@@ -47,6 +48,7 @@ class RemoteConfigUtil @Inject constructor() {
         })
     }
 
+    // Fetch remote config and update the colorLiveData
     fun fetchRemoteConfig(callback: (Boolean, String?) -> Unit) {
         remoteConfig.fetchAndActivate()
             .addOnCompleteListener { task ->

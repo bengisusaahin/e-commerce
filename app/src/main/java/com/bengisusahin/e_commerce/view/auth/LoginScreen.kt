@@ -37,6 +37,7 @@ import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.util.FieldValidation
 import com.bengisusahin.e_commerce.util.FormState
 
+// This is the login screen composable function that will be used to display the login screen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(

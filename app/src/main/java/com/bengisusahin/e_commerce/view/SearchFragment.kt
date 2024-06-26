@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -27,9 +26,9 @@ import com.bengisusahin.e_commerce.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+// SearchFragment displays a list of products based on the search query
 @AndroidEntryPoint
 class SearchFragment : Fragment(), SearchAdapter.Listener {
-
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private lateinit var searchAdapter: SearchAdapter
@@ -113,6 +112,7 @@ class SearchFragment : Fragment(), SearchAdapter.Listener {
         })
         binding.searchView.isIconifiedByDefault = false
 
+        // Observe the addToCartState LiveData to show a toast message when a product is added to cart
         homeViewModel.addToCartState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is ScreenState.Loading -> {

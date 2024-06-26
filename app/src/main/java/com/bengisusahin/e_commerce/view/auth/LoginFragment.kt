@@ -1,7 +1,6 @@
 package com.bengisusahin.e_commerce.view.auth
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,8 +23,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// This fragment is responsible for the login screen of the application
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
+    // ComposeView is used to display the login screen UI which is built with Jetpack Compose
     private lateinit var composeView: ComposeView
     private val viewModel by viewModels<AuthViewModel>()
     @Inject lateinit var sharedPrefManager: SharedPrefManager
@@ -64,6 +65,7 @@ class LoginFragment : Fragment() {
                     }
                 )
         }
+        // Observe the login state and navigate to the home screen if the login is successful
         lifecycleScope.launch {
             viewModel.loginState.collect {
                 when (it) {

@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import javax.inject.Inject
 
+// SharedPrefManager class is used to save and fetch data from shared preferences
 class SharedPrefManager@Inject constructor(
     context: Context
 ) {

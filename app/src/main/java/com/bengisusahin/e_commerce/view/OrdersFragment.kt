@@ -22,6 +22,7 @@ import com.bengisusahin.e_commerce.viewmodel.OrdersViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+// OrdersFragment class is created to display the orders of the user
 @AndroidEntryPoint
 class OrdersFragment : Fragment() {
     private var _binding: FragmentOrdersBinding? = null
@@ -53,6 +54,7 @@ class OrdersFragment : Fragment() {
         observeViewModel()
     }
 
+    // setupRecyclerView function is created to set up the recycler view
     private fun setupRecyclerView() {
         Log.d("OrdersFragment", "setupRecyclerView called")
         adapter = OrderRecyclerViewAdapter(listOf(), this)
@@ -60,6 +62,7 @@ class OrdersFragment : Fragment() {
         binding.rvCartProducts.adapter = adapter
     }
 
+    // observeViewModel function is created to observe the view model
     private fun observeViewModel() {
         viewModel.cart.observe(viewLifecycleOwner) { state ->
             when (state) {
@@ -68,10 +71,14 @@ class OrdersFragment : Fragment() {
                     binding.progressBar.visibility = View.VISIBLE
                 }
                 is ScreenState.Success -> {
-                    // Hide loading indicator and update the RecyclerView
+                    // Hide loading indicator and update the RecyclerView or show toast if empty
                     binding.progressBar.visibility = View.GONE
                     state.uiData?.let { newCart ->
-                        adapter.updateCart(newCart.carts)
+                        if (newCart.carts.isEmpty()) {
+                            Toast.makeText(context, "No orders yet", Toast.LENGTH_LONG).show()
+                        } else {
+                            adapter.updateCart(newCart.carts)
+                        }
                     }
                 }
                 is ScreenState.Error -> {
@@ -87,5 +94,4 @@ class OrdersFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
+// This class is responsible for handling the authentication operations
 class AuthRepository @Inject constructor(
     private val authService: AuthService,
     private val sharedPrefManager: SharedPrefManager

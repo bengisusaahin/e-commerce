@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.bengisusahin.e_commerce.MainActivity
 import com.bengisusahin.e_commerce.R
@@ -21,15 +20,12 @@ import com.bengisusahin.e_commerce.viewmodel.ProfileViewModel
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
+// displays the user's profile information and allows them to update it
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ProfileViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +49,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    // observe the profile LiveData to handle profile data
     private fun setUpObservers() {
         viewModel.profile.observe(viewLifecycleOwner) { state ->
             Log.d("ProfileFragment", "Observing profile LiveData: $state")
@@ -74,6 +71,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        // observe the updateProfileState LiveData to handle updates
         viewModel.updateProfileState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is ScreenState.Success -> {
@@ -96,6 +94,7 @@ class ProfileFragment : Fragment() {
             }
         }
     }
+    // displays the profile information in the UI
     private fun displayProfile(profile: Profile) {
         binding?.apply {
             etFirstName?.text = Editable.Factory.getInstance().newEditable(profile.firstName)
@@ -117,6 +116,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    // updates the profile information
     private fun updateProfile() {
         val updatedProfile = Profile(
             firstName = binding.etFirstName.text.toString(),

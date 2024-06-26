@@ -13,22 +13,21 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// This class is a ViewModel class for the favorite products. It is responsible for managing the favorite products
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
     private val favoriteProductUseCase: FavoriteProductUseCase,
     private val getAllFavoriteProductsUseCase: GetAllFavoriteProductsUseCase,
     private val deleteFavoriteUseCase: DeleteFavoriteProductUseCase
 ) : ViewModel() {
+    // MutableLiveData to hold the favorite products
     private val _favoriteProducts = MutableLiveData<ScreenState<List<FavoriteProducts>>>()
     val favoriteProducts: LiveData<ScreenState<List<FavoriteProducts>>> get() = _favoriteProducts
-
-    private suspend fun getCurrentUserId(): Long {
-        return favoriteProductUseCase.getCurrentUserId()
-    }
 
     init {
         getAllFavoriteProducts()
     }
+    // Function to get all favorite products from the database
     private fun getAllFavoriteProducts() {
         viewModelScope.launch {
             try {
@@ -41,6 +40,11 @@ class FavoriteViewModel @Inject constructor(
                 _favoriteProducts.value = ScreenState.Error(e.toString())
             }
         }
+    }
+
+    // Function to get the current user ID
+    private suspend fun getCurrentUserId(): Long {
+        return favoriteProductUseCase.getCurrentUserId()
     }
 
     fun deleteFavoriteProduct(favoriteProducts: FavoriteProducts) {

@@ -5,6 +5,7 @@ import com.bengisusahin.e_commerce.database.FavoriteProductDao
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+// Repository class for favorite products that handles database operations
 class FavoriteProductsRepository @Inject constructor(
     private val favoriteProductDao: FavoriteProductDao
 ){

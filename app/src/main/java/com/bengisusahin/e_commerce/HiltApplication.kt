@@ -6,6 +6,7 @@ import com.bengisusahin.e_commerce.util.RemoteConfigUtil
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
+// HiltApplication class is annotated with @HiltAndroidApp to generate the Hilt components
 @HiltAndroidApp
 class HiltApplication : Application(){
     @Inject

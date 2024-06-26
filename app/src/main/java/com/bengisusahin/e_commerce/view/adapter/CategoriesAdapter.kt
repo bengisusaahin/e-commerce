@@ -1,4 +1,4 @@
-package com.bengisusahin.e_commerce.view
+package com.bengisusahin.e_commerce.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -19,18 +19,18 @@ class CategoriesAdapter(
             binding.categoryName.setOnClickListener {
                 onCategoryClick(category.name)
             }
-            // Kategori ismini veya "slug"ını kullanarak resim ID'sini bulun
+            // Find the image ID for the category
             val imageId = binding.root.context.resources.getIdentifier("ic_${category.slug.replace('-', '_')}", "drawable", binding.root.context.packageName)
 
-            // Eğer bu ID geçerli bir resim ID'si ise, resmi ayarlayın
+            // If the image ID is valid, set the image for the category
             if (imageId != 0) {
                 val drawable = ResourcesCompat.getDrawable(binding.root.context.resources, imageId, null)
-                drawable?.setBounds(0, 0, 60, 60) // Burada 60x60 bir maksimum boyut belirledik
+                drawable?.setBounds(0, 0, 60, 60)
                 binding.categoryName.setCompoundDrawables(null, drawable, null, null)
             } else {
-                // Eğer bu ID geçerli bir resim ID'si değilse, varsayılan bir resmi ayarlayın
+                // If the image ID is not valid, set the default category image
                 val drawable = ResourcesCompat.getDrawable(binding.root.context.resources, R.drawable.ic_category, null)
-                drawable?.setBounds(0, 0, 60, 60) // Burada 60x60 bir maksimum boyut belirledik
+                drawable?.setBounds(0, 0, 60, 60)
                 binding.categoryName.setCompoundDrawables(null, drawable, null, null)
             }
         }
