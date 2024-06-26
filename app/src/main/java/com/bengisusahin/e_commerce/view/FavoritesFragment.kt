@@ -7,13 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bengisusahin.e_commerce.MainActivity
 import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.data.dataFavorites.FavoriteProducts
 import com.bengisusahin.e_commerce.databinding.FragmentFavoritesBinding
@@ -50,6 +53,8 @@ class FavoritesFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val toolbarTitle = (activity as? MainActivity)?.findViewById<TextView>(R.id.toolbar_title)
+        toolbarTitle?.text = getString(R.string.title_favorites)
 
         binding.rwFavorite.layoutManager = LinearLayoutManager(context)
         binding.rwFavorite.adapter = favoriteProductsAdapter

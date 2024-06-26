@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bengisusahin.e_commerce.MainActivity
+import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.databinding.FragmentCategoriesBinding
 import com.bengisusahin.e_commerce.util.ScreenState
 import com.bengisusahin.e_commerce.viewmodel.CategoriesViewModel
@@ -35,6 +39,8 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val toolbarTitle = (activity as? MainActivity)?.findViewById<TextView>(R.id.toolbar_title)
+        toolbarTitle?.text = getString(R.string.title_categories)
 
         categoriesAdapter = CategoriesAdapter(listOf()){ categoryName ->
             // Call getProductsByCategory when a category is clicked

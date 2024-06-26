@@ -50,4 +50,11 @@
     <string name="country">Country</string>
     <string name="user_image">User Image</string>
     <string name="personal_info">Personal Info</string>
+    <string name="title_home">Homepage</string>
+    <string name="title_categories">Categories</string>
+    <string name="title_detail">Detail</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_orders">Orders</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_search">Search Product</string>
 </resources>

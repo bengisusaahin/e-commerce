@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import com.bengisusahin.e_commerce.R
@@ -43,6 +44,7 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.title_detail)
 
         // Get the product ID from the arguments
         val args = DetailFragmentArgs.fromBundle(requireArguments())

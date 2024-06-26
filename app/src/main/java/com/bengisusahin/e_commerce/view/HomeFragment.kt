@@ -6,11 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bengisusahin.e_commerce.MainActivity
+import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.data.dataProduct.Product
 import com.bengisusahin.e_commerce.data.dataCart.AddToCartProduct
 import com.bengisusahin.e_commerce.databinding.FragmentHomeBinding
@@ -41,7 +44,8 @@ class HomeFragment : Fragment(), ProductAdapter.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val toolbarTitle = (activity as? MainActivity)?.findViewById<TextView>(R.id.toolbar_title)
+        toolbarTitle?.text = getString(R.string.title_home)
         binding.recyclerviewHome.layoutManager = GridLayoutManager(requireContext(),2)
 
         viewModel.products.observe(viewLifecycleOwner) { resource ->

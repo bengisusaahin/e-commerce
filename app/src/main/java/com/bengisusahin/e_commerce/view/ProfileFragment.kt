@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import com.bengisusahin.e_commerce.MainActivity
 import com.bengisusahin.e_commerce.R
 import com.bengisusahin.e_commerce.data.dataProfile.Address
 import com.bengisusahin.e_commerce.data.dataProfile.Profile
@@ -39,6 +42,8 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val toolbarTitle = (activity as? MainActivity)?.findViewById<TextView>(R.id.toolbar_title)
+        toolbarTitle?.text = getString(R.string.title_profile)
 
         Log.d("ProfileFragment", "onViewCreated is called")
         setUpObservers()

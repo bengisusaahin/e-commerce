@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -62,6 +63,7 @@ class MainActivity : AppCompatActivity() {
 
         val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onDrawerOpened(drawerView: View) {
                 sharedPrefManager.fetchUsername()?.let {
-                    drawerHeaderBinding.textView.text = it
+                    drawerHeaderBinding.textView.text = "Welcome, $it!"
                 }
                 sharedPrefManager.fetchUserImage()?.let {
                     Glide.with(this@MainActivity)
@@ -96,12 +98,16 @@ class MainActivity : AppCompatActivity() {
             this, drawerLayout, toolbar,
             R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
+        toggle.drawerArrowDrawable.color= ContextCompat.getColor(this,R.color.white)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         // Set up the action bar for use with the NavController
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
 
         navView.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            binding.toolbarTitle.text = destination.label
+        }
 
         navView.setNavigationItemSelectedListener { menuItem ->
             menuItem.isChecked = true
