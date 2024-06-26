@@ -44,7 +44,9 @@
             app:tabGravity="center"
             app:tabIndicator="@null"
             app:tabIndicatorGravity="center"
-            app:tabIndicatorHeight="0dp" />
+            app:tabIndicatorHeight="0dp"
+            app:tabSelectedTextColor="#2196F3"
+            />
 
         <TextView
             android:id="@+id/detailProductTitle"
@@ -70,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textColor="?android:colorPrimary"
+            android:textColor="#4CAF50"
             android:textSize="14sp"
             android:textStyle="bold"
             tools:text="Price" />
@@ -85,11 +87,9 @@
                 android:id="@+id/tvDetailProductRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:textColor="?android:colorPrimary"
+                android:textColor="#2196F3"
                 android:textStyle="bold"
                 tools:text="Rating"
-
                 />
 
             <RatingBar
@@ -98,7 +98,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="5"
-                android:rating="3" />
+                android:rating="3"
+                android:progressTint="#2196F3" />
         </LinearLayout>
 
         <CheckBox

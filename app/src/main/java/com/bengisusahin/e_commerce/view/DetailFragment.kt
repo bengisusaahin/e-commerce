@@ -1,5 +1,6 @@
 package com.bengisusahin.e_commerce.view
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import com.bengisusahin.e_commerce.R
@@ -90,7 +92,7 @@ class DetailFragment : Fragment() {
         binding.apply {
             detailProductTitle.text = product.title
             detailProductDescription.text = product.description
-            detailProductPrice.text = product.price.toString()
+            detailProductPrice.text = product.price.toString() + " ₺"
             detailProductRating.rating = product.rating.toFloat()
             progressBar.visibility = View.GONE
             viewPagerSetup(product)
@@ -110,11 +112,13 @@ class DetailFragment : Fragment() {
         binding.checkBoxFavorite.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 // If the checkbox is now checked, set the favorite icon and add the product to favorites
+                binding.checkBoxFavorite.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.red))
                 binding.checkBoxFavorite.setButtonDrawable(R.drawable.ic_like_filled)
                 homeViewModel.insertFavoriteProduct(product)
             } else {
                 // If the checkbox is now unchecked, set the not favorite icon and remove the product from favorites
                 binding.checkBoxFavorite.setButtonDrawable(R.drawable.ic_like)
+                binding.checkBoxFavorite.buttonTintList = null
                 homeViewModel.viewModelScope.launch {
                     val deleteResult = homeViewModel.deleteFavoriteProduct(product)
                     if (deleteResult == 0) {

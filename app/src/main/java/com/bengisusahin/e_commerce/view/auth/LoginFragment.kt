@@ -44,7 +44,6 @@ class LoginFragment : Fragment() {
         (activity as? AppCompatActivity)?.supportActionBar?.hide()
 
         composeView.setContent {
-            val loginState by viewModel.loginState.collectAsState(initial = ResourceResponseState.Loading())
             val formState by viewModel.loginFormState.collectAsState(
                 initial = FormState(
                     usernameError = FieldValidation.Success,
@@ -56,7 +55,6 @@ class LoginFragment : Fragment() {
             val password = if (rememberMe) sharedPrefManager.fetchPassword() else ""
 
                 LoginScreen(
-                    state = loginState,
                     formState = formState,
                     username = username ?: "",
                     password = password ?: "",
@@ -70,11 +68,11 @@ class LoginFragment : Fragment() {
             viewModel.loginState.collect {
                 when (it) {
                     is ResourceResponseState.Loading -> {
-                        Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT)
+                        Toast.makeText(requireContext(), "You are logging in...", Toast.LENGTH_SHORT)
                             .show()
                     }
                     is ResourceResponseState.Success -> {
-                        sharedPrefManager.saveUsername(it.data!!.username)
+                        sharedPrefManager.saveFirstName(it.data!!.firstName)
                         sharedPrefManager.saveUserImage(it.data.image)
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     }

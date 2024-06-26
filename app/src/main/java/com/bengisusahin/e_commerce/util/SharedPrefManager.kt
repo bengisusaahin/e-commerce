@@ -63,4 +63,14 @@ class SharedPrefManager@Inject constructor(
     fun fetchUserImage(): String? {
         return sharedPreferences.getString("KEY_USER_IMAGE", "")
     }
+
+    fun saveFirstName(firstName: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("KEY_FIRST_NAME", firstName)
+        editor.apply()
+    }
+
+    fun fetchFirstName(): String? {
+        return sharedPreferences.getString("KEY_FIRST_NAME", "")
+    }
 }

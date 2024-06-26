@@ -72,10 +72,10 @@ class MainActivity : AppCompatActivity() {
 
         drawerLayout.addDrawerListener(object: DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-                Log.d("MainActivity", "onDrawerSlide: $slideOffset")
+               // Log.d("MainActivity", "onDrawerSlide: $slideOffset")
             }
             override fun onDrawerOpened(drawerView: View) {
-                sharedPrefManager.fetchUsername()?.let {
+                sharedPrefManager.fetchFirstName()?.let {
                     drawerHeaderBinding.textView.text = "Welcome, $it!"
                 }
                 sharedPrefManager.fetchUserImage()?.let {

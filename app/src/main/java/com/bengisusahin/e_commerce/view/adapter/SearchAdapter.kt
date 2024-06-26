@@ -1,9 +1,11 @@
 package com.bengisusahin.e_commerce.view.adapter
 
+import android.content.res.ColorStateList
 import android.util.Log
 import com.bumptech.glide.Glide
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bengisusahin.e_commerce.R
@@ -37,10 +39,12 @@ class SearchAdapter(
                     if (isChecked) {
                         // If the checkbox is now checked, set the favorite icon and add the product to favorites
                         checkBoxFavorite.setButtonDrawable(R.drawable.ic_like_filled)
+                        checkBoxFavorite.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.red))
                         homeViewModel.insertFavoriteProduct(product)
                     } else {
                         // If the checkbox is now unchecked, set the not favorite icon and remove the product from favorites
                         checkBoxFavorite.setButtonDrawable(R.drawable.ic_like)
+                        binding.checkBoxFavorite.buttonTintList = null
                         homeViewModel.viewModelScope.launch {
                             val deleteResult = homeViewModel.deleteFavoriteProduct(product)
                             if (deleteResult == 0) {
