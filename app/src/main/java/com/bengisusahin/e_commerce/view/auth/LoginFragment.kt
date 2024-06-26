@@ -30,6 +30,7 @@ class LoginFragment : Fragment() {
     private lateinit var composeView: ComposeView
     private val viewModel by viewModels<AuthViewModel>()
     @Inject lateinit var sharedPrefManager: SharedPrefManager
+    private var isLoadingToastShown = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,8 +71,10 @@ class LoginFragment : Fragment() {
             viewModel.loginState.collect {
                 when (it) {
                     is ResourceResponseState.Loading -> {
-                        Toast.makeText(requireContext(), "You are logging in...", Toast.LENGTH_SHORT)
-                            .show()
+                        if (!isLoadingToastShown) {
+                            Toast.makeText(requireContext(), "You are logging in...", Toast.LENGTH_SHORT).show()
+                            isLoadingToastShown = true
+                        }
                     }
                     is ResourceResponseState.Success -> {
                         sharedPrefManager.saveFirstName(it.data!!.firstName)
