@@ -24,15 +24,16 @@ https://github.com/bengisusaahin/e-commerce/assets/74653216/b9ea56b8-c624-491b-b
 - Jetpack Compose
 - XML
 - Glide
-- Push Notification
 - Room
 - MVVM
 - Hilt
 - Coroutines
 - Flow
+- Live Data
 - Retrofit
 - Clean Architecture
 - Viewpager
-- Compose Foundation
+- JWT
 - Firebase Remote Config
 - Firebase FCM
+- Push Notification
